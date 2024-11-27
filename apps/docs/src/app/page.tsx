@@ -9,11 +9,12 @@ export default function Home() {
                 initialValue: "12312312"
             },
             "main.1": {}
-        }
+        },
+        // validators: {
+        //
+        // }
     })
 
-    const [state, setState] = useState('')
-    console.log(12412);
     return (
         <div>
             <pre>
@@ -36,6 +37,10 @@ export default function Home() {
                         {...props}
                     />
                 }
+            />
+            <input
+                value={state}
+                onChange={(e) => setState(e.target.value)}
             />
         </div>
     );
