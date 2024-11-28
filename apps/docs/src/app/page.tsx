@@ -1,6 +1,15 @@
 "use client";
 import {useForm} from "@refine-react-kit/form"
 import {useState} from "react";
+import {z} from "zod";
+
+const validation = z.object({
+    main: z.string().min(2)
+})
+
+validation.safeParse({
+    main: '123'
+})
 
 export default function Home() {
     const form = useForm({
@@ -10,38 +19,41 @@ export default function Home() {
             },
             "main.1": {}
         },
-        // validators: {
-        //
-        // }
+        validators: {
+            onChange: validation
+        }
     })
+
+
 
     return (
         <div>
-            <pre>
-                {JSON.stringify(form.fields, null, 2)}
-            </pre>
-            <form.Field
-                field={form.fields["main"]}
-                render={(props) =>
-                    <input
-                        {...props}
-                    />
-                }
-            />
-            <br/>
-            <br/>
-            <form.Field
-                field={form.fields["main.1"]}
-                render={(props) =>
-                    <input
-                        {...props}
-                    />
-                }
-            />
-            <input
-                value={state}
-                onChange={(e) => setState(e.target.value)}
-            />
+            <form.Form>
+                <pre>
+                    {/*{JSON.stringify(formContext?.fields, null, 2)}*/}
+                </pre>
+                <form.Field
+                    name={'main'}
+                    render={(props) =>
+                        <input
+                            {...props}
+                        />
+                    }
+                />
+                <br/>
+                <br/>
+                <form.Field
+                    name={'main.1'}
+                    render={(props) =>
+                        <>
+                            <input
+                                {...props}
+                            />
+                        </>
+
+                    }
+                />
+            </form.Form>
         </div>
     );
 }
