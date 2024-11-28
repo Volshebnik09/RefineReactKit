@@ -33,7 +33,7 @@ export default function Home() {
     const form = useForm({
         fields: {
             'password': {
-                initialValue: '123'
+                initialValue: '123',
             },
             'confirmPassword': {},
             'image': {}

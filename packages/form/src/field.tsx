@@ -10,7 +10,6 @@ export type TFieldMeta = {
 
 export type TCreateFieldMetaProps = {
     initialValue?: TFieldValue
-    isValid?: boolean
     name: TFieldName
 }
 export type TFields<T extends TFieldName> = Record<T, TFieldMeta>
@@ -30,7 +29,6 @@ export const createField = (props: TCreateFieldMetaProps): TFieldMeta => {
 
 export type TFieldsToCreate<T extends TFieldName> = Record<T, {
     initialValue?: TFieldValue
-    isValid?: boolean
 }>
 
 export type TCreateNewFieldsProps<T extends TFieldName> = {
