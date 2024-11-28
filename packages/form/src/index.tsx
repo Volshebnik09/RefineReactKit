@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useMemo} from "react";
 import {z, ZodError} from "zod";
 import {Store, useStore} from "@tanstack/react-store";
 import {
@@ -50,7 +50,7 @@ const getRawValues = (props: {
 }
 
 export const useForm = <T extends TFieldName>(props: TUseFormProps<T>) => {
-    const fieldsStore = new Store(createNewFields({fields: props.fields}))
+    const fieldsStore = useMemo(() => new Store(createNewFields({fields: props.fields})), []);
 
     function useSelector<TResult>(selector: (state: typeof fieldsStore['state']) => TResult): TResult {
         return useStore(fieldsStore, selector);
@@ -146,12 +146,14 @@ export const useForm = <T extends TFieldName>(props: TUseFormProps<T>) => {
         return fieldKeys.every((key) => fields[key as T].errors.length === 0)
     }
 
-    if (props.validators?.onMount) {
-        validate({
-            fields: fieldsStore.state,
-            validationFunction: props.validators.onMount.safeParse
-        })
-    }
+    useEffect(()=>{
+        if (props.validators?.onMount) {
+            validate({
+                fields: fieldsStore.state,
+                validationFunction: props.validators.onMount.safeParse
+            })
+        }
+    }, [])
 
     const onSubmit = (onSubmitProps: {
         fields: TFields<T>,
@@ -193,8 +195,8 @@ export const useForm = <T extends TFieldName>(props: TUseFormProps<T>) => {
 
     return {
         formRef,
-        Field,
-        Form,
+        Field: React.useMemo(() => Field, []),
+        Form: React.useMemo(() => Form, []),
         useSelector,
         setFieldErrors,
         useCanSubmit,
@@ -202,7 +204,3 @@ export const useForm = <T extends TFieldName>(props: TUseFormProps<T>) => {
 }
 
 export type TForm<T extends TFieldName = any> = ReturnType<typeof useForm<T>>
-
-export type {
-    TFieldsToCreate
-}
