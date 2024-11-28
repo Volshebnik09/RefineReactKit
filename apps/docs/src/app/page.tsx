@@ -51,7 +51,6 @@ export default function Home() {
                 onSubmit={e => {
                     e.preventDefault()
                     const formData = new FormData(e.target as HTMLFormElement)
-                    console.log(formData.entries());
 
                     const values = Object.fromEntries(formData.entries());
                     console.log(values); // { username: "value", email: "value" }
