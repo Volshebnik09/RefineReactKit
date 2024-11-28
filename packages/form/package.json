@@ -9,7 +9,8 @@
   "scripts": {
     "lint": "eslint . --max-warnings 0",
     "check-types": "tsc --noEmit",
-    "dev": "tsup src/index.tsx --format cjs,esm --dts --watch"
+    "dev": "tsup src/index.tsx --format cjs,esm --dts --watch",
+    "build": "tsup src/index.tsx --format cjs,esm --dts"
   },
   "devDependencies": {
     "@refine-react-kit/eslint-config": "workspace:*",

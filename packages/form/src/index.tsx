@@ -4,7 +4,7 @@ import {Store, useStore} from "@tanstack/react-store";
 import {
     createNewFields,
     getRawFieldsData,
-    TCreateFieldMetaProps, TCreateNewFieldsProps, TFieldMeta,
+    TFieldMeta,
     TFieldName,
     TFields, TFieldsToCreate,
     TFieldValue,
@@ -32,6 +32,7 @@ type TUseFormProps<T extends TFieldName> = {
     fields: TFieldsToCreate<T>
     validators?: TFormValidators,
 }
+
 
 const getRawValues = (props: {
     formRef: React.RefObject<HTMLFormElement>,
@@ -155,3 +156,6 @@ export const useForm = <T extends TFieldName>(props: TUseFormProps<T>) => {
 
 export type TForm <T extends TFieldName = any> = ReturnType<typeof useForm<T>>
 
+export type {
+    TFieldsToCreate
+}

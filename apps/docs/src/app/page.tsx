@@ -60,7 +60,7 @@ export default function Home() {
                 }}
             >
                 <form.Field
-                    name={'password'}
+                    name={'image'}
                     render={(props) =>
                         <div>
                             <input
