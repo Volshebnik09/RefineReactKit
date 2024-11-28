@@ -4,7 +4,7 @@ import {Store, useStore} from "@tanstack/react-store";
 import {
     createNewFields,
     getRawFieldsData,
-    TCreateFieldMetaProps,
+    TCreateFieldMetaProps, TFieldMeta,
     TFieldName,
     TFields,
     TFieldValue,
@@ -14,6 +14,7 @@ import {
 type TFieldRender = (props: {
     value: TFieldValue,
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
+    fieldMeta: TFieldMeta
 }) => React.ReactNode
 
 type TFieldComponentProps<T extends TFieldName> = {
@@ -24,6 +25,7 @@ type TFieldComponentProps<T extends TFieldName> = {
 
 type TFormValidators = {
     onChange?: ReturnType<typeof z.object> | z.ZodEffects<z.ZodObject<any>>
+    onMount?: z.ZodObject<any>| z.ZodEffects<z.ZodObject<any>>
 }
 
 type TUseFormProps<T extends TFieldName> = {
@@ -50,6 +52,19 @@ export const useForm = <T extends TFieldName>(props: TUseFormProps<T>) => {
         })
     }
 
+    const appendErrors = (name: T, errors: string[]) => {
+        fieldsStore.setState((fields) => {
+            const set = new Set([...fields[name].errors, ...errors])
+            return {
+                ...fields,
+                [name]: {
+                    ...fields[name],
+                    errors: Array.from(set)
+                }
+            }
+        })
+    }
+
     const validate = (props: {
         fields: TFields<any>,
         validationFunction: z.ZodObject<any>['safeParse']
@@ -61,7 +76,7 @@ export const useForm = <T extends TFieldName>(props: TUseFormProps<T>) => {
         })
         if (res?.error) {
             res.error.issues.map((i)=>{
-                setFieldErrors(i.path[0] as T, [i.message])
+                appendErrors(i.path[0] as T, [i.message])
             })
         } else {
         }
@@ -74,12 +89,14 @@ export const useForm = <T extends TFieldName>(props: TUseFormProps<T>) => {
 
         return fieldProps.render({
             value: fieldMeta.value || "",
+            fieldMeta: fieldMeta,
             onChange: (e) => {
                 const newFields = {
                     ...fields,
                     [fieldProps.name]: {
                         ...fieldMeta,
-                        value: e.target.value
+                        value: e.target.value,
+                        touched: true
                     }
                 }
                 fieldsStore.setState(()=>newFields)
@@ -96,12 +113,25 @@ export const useForm = <T extends TFieldName>(props: TUseFormProps<T>) => {
     }
 
 
+    const useCanSubmit = () => {
+        const fields = useSelector((state) => state)
+        const fieldKeys = Object.keys(fields)
+        return fieldKeys.every((key) => fields[key as T].errors.length === 0)
+    }
+
+    if (props.validators?.onMount) {
+        validate({
+            fields: fieldsStore.state,
+            validationFunction: props.validators.onMount.safeParse
+        })
+    }
+
 
     return {
         Field,
         useSelector,
         setFieldErrors,
+        useCanSubmit,
     }
-
 }
 

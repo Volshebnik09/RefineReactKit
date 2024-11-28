@@ -5,7 +5,6 @@ export type TFieldMeta = {
     value: TFieldValue;
     errors: string[];
     touched: boolean
-    isValid: boolean
 }
 
 export type TCreateFieldMetaProps = {
@@ -19,7 +18,6 @@ export const createFieldMeta = (props: TCreateFieldMetaProps): TFieldMeta => {
         value: props.initialValue ?? "",
         errors: [],
         touched: false,
-        isValid: props.isValid ?? true
     }
 }
 

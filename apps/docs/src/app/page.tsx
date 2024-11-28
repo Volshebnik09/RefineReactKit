@@ -10,52 +10,61 @@ const validation = z.object({
     path: ["confirmPassword"]
 })
 
-
 const form = useForm({
     fields: {
         'password': {},
         'confirmPassword': {}
     },
     validators: {
-        onChange: validation
+        onChange: validation,
+        onMount: validation
     }
 })
 
+const SubmitButton = () => {
+    const canSubmit = form.useCanSubmit()
+
+    return <button disabled={!canSubmit}>
+        {canSubmit ? 'Submit' : 'Invalid'}
+    </button>
+}
+
 export default function Home() {
 
-    const fields = form.useSelector((fields) => fields)
-
-    const confirmationPasswordErrors = form.useSelector((fields) => fields.confirmPassword.errors)
-
-        return <div>
+    return (
+        <div>
             <form.Field
                 name={'password'}
                 render={(props) =>
-                    <input
-                        {...props}
-                    />
+                    <div>
+                        <input
+                            value={props.value}
+                            onChange={props.onChange}
+                        />
+                        <div>
+                            {props.fieldMeta.touched ? props.fieldMeta.errors.join(', ') : ''}
+                        </div>
+                    </div>
                 }
             />
-            <br/>
-            {fields.password.errors[0] || ''}
             <br/>
             <br/>
             <form.Field
                 name={'confirmPassword'}
                 render={(props) =>
-                    <>
+                    <div>
                         <input
-                            {...props}
+                            value={props.value}
+                            onChange={props.onChange}
                         />
-                    </>
+                        <div>
+                            {props.fieldMeta.touched ? props.fieldMeta.errors.join(', ') : ''}
+                        </div>
+                    </div>
                 }
             />
-            {confirmationPasswordErrors.length > 0 && <p>{confirmationPasswordErrors[0]}</p>}
-
             <br/>
-            <br/>
-            <pre>
-            {JSON.stringify(fields, null, 2)}
-            </pre>
+            <SubmitButton/>
         </div>
+    )
 }
