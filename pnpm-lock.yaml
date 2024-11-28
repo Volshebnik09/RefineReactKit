@@ -36,6 +36,12 @@ importers:
       '@refine-react-kit/form':
         specifier: workspace:*
         version: link:../../packages/form
+      '@refine-react-kit/ui':
+        specifier: workspace:*
+        version: link:../../packages/ui
+      '@refine-react-kit/utils':
+        specifier: workspace:*
+        version: link:../../packages/utils
       '@types/node':
         specifier: ^20
         version: 20.17.6
@@ -144,6 +150,77 @@ importers:
         version: 3.23.8
 
   packages/typescript-config: {}
+
+  packages/ui:
+    dependencies:
+      react:
+        specifier: 19.0.0-rc-5c56b873-20241107
+        version: 19.0.0-rc-5c56b873-20241107
+      react-dom:
+        specifier: 19.0.0-rc-5c56b873-20241107
+        version: 19.0.0-rc-5c56b873-20241107(react@19.0.0-rc-5c56b873-20241107)
+    devDependencies:
+      '@refine-react-kit/eslint-config':
+        specifier: workspace:*
+        version: link:../eslint-config
+      '@repo/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      '@turbo/gen':
+        specifier: ^1.12.4
+        version: 1.13.4(@types/node@20.17.6)(typescript@5.5.4)
+      '@types/node':
+        specifier: ^20.11.24
+        version: 20.17.6
+      '@types/react':
+        specifier: 18.3.0
+        version: 18.3.0
+      '@types/react-dom':
+        specifier: 18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.3.5(jiti@1.21.6)(postcss@8.4.49)(typescript@5.5.4)(yaml@2.6.1)
+      typescript:
+        specifier: 5.5.4
+        version: 5.5.4
+      zod:
+        specifier: ^3.23.8
+        version: 3.23.8
+
+  packages/utils:
+    dependencies:
+      react:
+        specifier: 19.0.0-rc-5c56b873-20241107
+        version: 19.0.0-rc-5c56b873-20241107
+      react-dom:
+        specifier: 19.0.0-rc-5c56b873-20241107
+        version: 19.0.0-rc-5c56b873-20241107(react@19.0.0-rc-5c56b873-20241107)
+    devDependencies:
+      '@refine-react-kit/eslint-config':
+        specifier: workspace:*
+        version: link:../eslint-config
+      '@repo/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      '@turbo/gen':
+        specifier: ^1.12.4
+        version: 1.13.4(@types/node@20.17.6)(typescript@5.5.4)
+      '@types/node':
+        specifier: ^20.11.24
+        version: 20.17.6
+      '@types/react':
+        specifier: 18.3.0
+        version: 18.3.0
+      '@types/react-dom':
+        specifier: 18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.3.5(jiti@1.21.6)(postcss@8.4.49)(typescript@5.5.4)(yaml@2.6.1)
+      typescript:
+        specifier: 5.5.4
+        version: 5.5.4
 
 packages:
 

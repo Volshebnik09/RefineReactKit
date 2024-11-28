@@ -16,6 +16,8 @@
   },
   "devDependencies": {
     "@refine-react-kit/form": "workspace:*",
+    "@refine-react-kit/ui": "workspace:*",
+    "@refine-react-kit/utils": "workspace:*",
     "typescript": "^5",
     "@types/node": "^20",
     "@types/react": "^18",

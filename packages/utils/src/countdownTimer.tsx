@@ -6,9 +6,9 @@ const useCountdownTimer = (initialSeconds:number, onEnd?:() => void) => {
     useEffect(() => {
         if (seconds <= 0) {
             if (onEnd) {
-                onEnd(); // Вызываем коллбэк, когда таймер достиг 0
+                onEnd();
             }
-            return; // Прекращаем выполнение, если время вышло
+            return;
         }
 
         const timerId = setInterval(() => {
