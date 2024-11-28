@@ -150,6 +150,8 @@ export const useForm = <T extends TFieldName>(props: TUseFormProps<T>) => {
         useSelector,
         setFieldErrors,
         useCanSubmit,
-    }
+    } as const
 }
+
+export type TForm <T extends TFieldName = any> = ReturnType<typeof useForm<T>>
 

@@ -1,5 +1,5 @@
 "use client";
-import {useForm} from "@refine-react-kit/form"
+import {TForm, useForm} from "@refine-react-kit/form"
 import {z} from "zod";
 
 const validation = z.object({
@@ -12,11 +12,20 @@ const validation = z.object({
 }).refine((data) => data.image instanceof File, {
     message: 'Image must be a file',
     path: ['image']
-}).refine(data =>data.image.type === 'image/jpeg' || data.image.type === 'image/png', {
+}).refine(data => data.image.type === 'image/jpeg' || data.image.type === 'image/png', {
     message: 'Image must be a jpeg or png',
     path: ['image']
 })
 
+const SubmitButton = (props: {
+    form: TForm
+}) => {
+    const canSubmit = props.form.useCanSubmit()
+
+    return <button disabled={!canSubmit}>
+        {canSubmit ? 'Submit' : 'Invalid'}
+    </button>
+}
 
 export default function Home() {
 
@@ -34,15 +43,6 @@ export default function Home() {
             onMount: validation
         }
     })
-
-    const SubmitButton = () => {
-        const canSubmit = form.useCanSubmit()
-
-        return <button disabled={!canSubmit}>
-            {canSubmit ? 'Submit' : 'Invalid'}
-        </button>
-    }
-
 
     return (
         <div>
@@ -105,7 +105,7 @@ export default function Home() {
                     }
                 />
                 <br/>
-                <SubmitButton/>
+                <SubmitButton form={form}/>
             </form>
 
         </div>
