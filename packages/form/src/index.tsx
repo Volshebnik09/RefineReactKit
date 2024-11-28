@@ -4,9 +4,9 @@ import {Store, useStore} from "@tanstack/react-store";
 import {
     createNewFields,
     getRawFieldsData,
-    TCreateFieldMetaProps, TFieldMeta,
+    TCreateFieldMetaProps, TCreateNewFieldsProps, TFieldMeta,
     TFieldName,
-    TFields,
+    TFields, TFieldsToCreate,
     TFieldValue,
 } from "./field.js";
 
@@ -29,13 +29,13 @@ type TFormValidators = {
 }
 
 type TUseFormProps<T extends TFieldName> = {
-    fields: Record<T, TCreateFieldMetaProps>
+    fields: TFieldsToCreate<T>
     validators?: TFormValidators,
 }
 
 
 export const useForm = <T extends TFieldName>(props: TUseFormProps<T>) => {
-    const fieldsStore = new Store(createNewFields(props.fields))
+    const fieldsStore = new Store(createNewFields({fields:props.fields}))
     function useSelector<TResult>(selector: (state: typeof fieldsStore['state']) => TResult): TResult {
         return useStore(fieldsStore, selector);
     }
@@ -112,7 +112,6 @@ export const useForm = <T extends TFieldName>(props: TUseFormProps<T>) => {
         })
     }
 
-
     const useCanSubmit = () => {
         const fields = useSelector((state) => state)
         const fieldKeys = Object.keys(fields)
@@ -125,7 +124,6 @@ export const useForm = <T extends TFieldName>(props: TUseFormProps<T>) => {
             validationFunction: props.validators.onMount.safeParse
         })
     }
-
 
     return {
         Field,

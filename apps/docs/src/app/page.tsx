@@ -4,7 +4,8 @@ import {z} from "zod";
 
 const validation = z.object({
     password: z.string().min(3),
-    confirmPassword: z.string().min(3)
+    confirmPassword: z.string().min(3),
+    // image: z.string().url(),
 }).refine((data) => data.password === data.confirmPassword, {
     message: "Passwords don't match",
     path: ["confirmPassword"]
@@ -13,7 +14,8 @@ const validation = z.object({
 const form = useForm({
     fields: {
         'password': {},
-        'confirmPassword': {}
+        'confirmPassword': {},
+        'image': {}
     },
     validators: {
         onChange: validation,
@@ -33,38 +35,67 @@ export default function Home() {
 
     return (
         <div>
-            <form.Field
-                name={'password'}
-                render={(props) =>
-                    <div>
-                        <input
-                            value={props.value}
-                            onChange={props.onChange}
-                        />
+            <form
+                onSubmit={e => {
+                    e.preventDefault()
+                    const formData = new FormData(e.target as HTMLFormElement)
+                    console.log(formData.entries());
+
+                    const values = Object.fromEntries(formData.entries());
+                    console.log(values); // { username: "value", email: "value" }
+
+                }}
+            >
+                <form.Field
+                    name={'password'}
+                    render={(props) =>
                         <div>
-                            {props.fieldMeta.touched ? props.fieldMeta.errors.join(', ') : ''}
+                            <input
+                                name={props.fieldMeta.name}
+                                value={props.value}
+                                onChange={props.onChange}
+                            />
+                            <div>
+                                {props.fieldMeta.touched ? props.fieldMeta.errors.join(', ') : ''}
+                            </div>
                         </div>
-                    </div>
-                }
-            />
-            <br/>
-            <br/>
-            <form.Field
-                name={'confirmPassword'}
-                render={(props) =>
-                    <div>
-                        <input
-                            value={props.value}
-                            onChange={props.onChange}
-                        />
+                    }
+                />
+                <br/>
+                <br/>
+                <form.Field
+                    name={'confirmPassword'}
+                    render={(props) =>
                         <div>
-                            {props.fieldMeta.touched ? props.fieldMeta.errors.join(', ') : ''}
+                            <input
+                                value={props.value}
+                                onChange={props.onChange}
+                            />
+                            <div>
+                                {props.fieldMeta.touched ? props.fieldMeta.errors.join(', ') : ''}
+                            </div>
                         </div>
-                    </div>
-                }
-            />
-            <br/>
-            <SubmitButton/>
+                    }
+                />
+                <form.Field
+                    name={'image'}
+                    render={(props) =>
+                        <div>
+                            <input
+                                value={props.value}
+                                onChange={props.onChange}
+                                type={'file'}
+                            />
+                            <div>
+                                {props.fieldMeta.touched ? props.fieldMeta.errors.join(', ') : ''}
+                            </div>
+                        </div>
+                    }
+                />
+                <br/>
+                <SubmitButton/>
+            </form>
+
         </div>
     )
 }
