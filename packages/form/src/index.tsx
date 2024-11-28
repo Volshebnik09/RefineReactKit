@@ -1,5 +1,6 @@
 import React, {useContext, useRef, useState} from "react";
 import {z} from "zod";
+import {Store, useStore} from "@tanstack/react-store";
 
 export type TFieldValue = string
 export type TFieldName = string
@@ -91,70 +92,54 @@ export const getRawFieldsData = (fields: TFields<any>) => {
 
 
 export const useForm = <T extends TFieldName>(props: TUseFormProps<T>) => {
-    const newFields = createNewFields(props.fields)
+    const fieldsStore = new Store(createNewFields(props.fields))
+    const useSelector = (selector: (fields: TFields<T>) => any) => {
+        return useStore(fieldsStore, selector)
+    }
 
-    const Form = (props: React.InputHTMLAttributes<HTMLFormElement>) => {
-
-        const [fields, setFields] = useState(() => newFields)
-
-        return <FormContext.Provider value={{
-            fields,
-            setFields
-        }}>
-            <form {...props}/>
-        </FormContext.Provider>
+    const setFieldErrors = (name: T, errors: string[]) => {
+        fieldsStore.setState((fields) => {
+            return {
+                ...fields,
+                [name]: {
+                    ...fields[name],
+                    errors: errors
+                }
+            }
+        })
     }
 
     const Field = (fieldProps: TFieldComponentProps<T>) => {
-        const formContext = useContext(FormContext)
 
-        if (!formContext) {
-            throw new Error('FieldsContext is not provided')
-        }
 
-        const fieldMeta = formContext.fields[fieldProps.name]
-
-        if (!fieldMeta) {
-            throw new Error(`Field ${fieldProps.name} not found`)
-        }
-
+        const fieldMeta = useSelector((state)=> state[fieldProps.name])
+        const fields= useStore(fieldsStore, (state)=> state)
 
         return fieldProps.render({
             value: fieldMeta.value || "",
             onChange: (e) => {
-                formContext.setFields((fields) => {
-                    return {
-                        ...fields,
-                        [fieldProps.name]: {
-                            ...fieldMeta,
-                            value: e.target.value
-                        }
+                const newFields = {
+                    ...fields,
+                    [fieldProps.name]: {
+                        ...fieldMeta,
+                        value: e.target.value
                     }
-                })
+                }
+                fieldsStore.setState(()=>newFields)
 
-                const rawValues = getRawFieldsData(formContext.fields)
-
-                const res = props.validators?.onChange?.safeParse(getRawFieldsData(formContext.fields))
+                const rawValues = getRawFieldsData(newFields)
+                const res = props.validators?.onChange?.safeParse(rawValues)
+                setFieldErrors(fieldProps.name, [])
                 if (res?.error) {
-                    formContext.setFields((fields) => {
-                        return {
-                            ...fields,
-                            [fieldProps.name]: {
-                                ...fieldMeta,
-                                value: e.target.value,
-                                errors: [res.error.message]
-                            }
-                        }
-                    })
+                    setFieldErrors(fieldProps.name, res.error.issues.map((i)=>i.message))
                 }
             }
         })
-
     }
 
     return {
-        Form,
         Field,
+        useSelector,
     }
 
 }

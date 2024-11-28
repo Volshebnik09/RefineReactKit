@@ -11,26 +11,29 @@ validation.safeParse({
     main: '123'
 })
 
-export default function Home() {
-    const form = useForm({
-        fields: {
-            "main": {
-                initialValue: "12312312"
-            },
-            "main.1": {}
+const form = useForm({
+    fields: {
+        "main": {
+            initialValue: "12312312"
         },
-        validators: {
-            onChange: validation
-        }
-    })
+        "main.1": {}
+    },
+    validators: {
+        onChange: validation
+    }
+})
+
+export default function Home() {
+
+
+    const f2 = form.useSelector(state => state)
 
 
 
     return (
         <div>
-            <form.Form>
                 <pre>
-                    {/*{JSON.stringify(formContext?.fields, null, 2)}*/}
+                    {JSON.stringify(f2, null, 2)}
                 </pre>
                 <form.Field
                     name={'main'}
@@ -53,7 +56,6 @@ export default function Home() {
 
                     }
                 />
-            </form.Form>
         </div>
     );
 }
