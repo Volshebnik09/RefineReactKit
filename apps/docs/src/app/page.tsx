@@ -1,22 +1,20 @@
 "use client";
 import {useForm} from "@refine-react-kit/form"
-import {useState} from "react";
 import {z} from "zod";
 
 const validation = z.object({
-    main: z.string().min(2)
+    password: z.string().min(3),
+    confirmPassword: z.string().min(3)
+}).refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords don't match",
+    path: ["confirmPassword"]
 })
 
-validation.safeParse({
-    main: '123'
-})
 
 const form = useForm({
     fields: {
-        "main": {
-            initialValue: "12312312"
-        },
-        "main.1": {}
+        'password': {},
+        'confirmPassword': {}
     },
     validators: {
         onChange: validation
@@ -25,37 +23,39 @@ const form = useForm({
 
 export default function Home() {
 
+    const fields = form.useSelector((fields) => fields)
 
-    const f2 = form.useSelector(state => state)
+    const confirmationPasswordErrors = form.useSelector((fields) => fields.confirmPassword.errors)
 
-
-
-    return (
-        <div>
-                <pre>
-                    {JSON.stringify(f2, null, 2)}
-                </pre>
-                <form.Field
-                    name={'main'}
-                    render={(props) =>
+        return <div>
+            <form.Field
+                name={'password'}
+                render={(props) =>
+                    <input
+                        {...props}
+                    />
+                }
+            />
+            <br/>
+            {fields.password.errors[0] || ''}
+            <br/>
+            <br/>
+            <form.Field
+                name={'confirmPassword'}
+                render={(props) =>
+                    <>
                         <input
                             {...props}
                         />
-                    }
-                />
-                <br/>
-                <br/>
-                <form.Field
-                    name={'main.1'}
-                    render={(props) =>
-                        <>
-                            <input
-                                {...props}
-                            />
-                        </>
+                    </>
+                }
+            />
+            {confirmationPasswordErrors.length > 0 && <p>{confirmationPasswordErrors[0]}</p>}
 
-                    }
-                />
+            <br/>
+            <br/>
+            <pre>
+            {JSON.stringify(fields, null, 2)}
+            </pre>
         </div>
-    );
 }

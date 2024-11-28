@@ -1,100 +1,41 @@
-import React, {useContext, useRef, useState} from "react";
+import React from "react";
 import {z} from "zod";
 import {Store, useStore} from "@tanstack/react-store";
-
-export type TFieldValue = string
-export type TFieldName = string
-
-export type TFieldMeta = {
-    value: TFieldValue;
-    errors: string[];
-    touched: boolean
-    isValid: boolean
-}
-
-export type TCreateFieldMetaProps = {
-    initialValue?: TFieldValue
-    isValid?: boolean
-}
-
-export const createFieldMeta = (props: TCreateFieldMetaProps): TFieldMeta => {
-    return {
-        value: props.initialValue ?? "",
-        errors: [],
-        touched: false,
-        isValid: props.isValid ?? true
-    }
-}
-
-export type TUseFieldMetaProps = {
-    initialValue?: TFieldValue
-}
-
-export type TSetFieldMeta = (fieldMeta: TFieldMeta) => void
-
-export const createField = (props: TCreateFieldMetaProps): TFieldMeta => {
-    return createFieldMeta(props)
-}
-
-export type TFields<T extends TFieldName> = Record<T, TFieldMeta>
-
-export const createNewFields = <T extends TFieldName>(fields: Record<T, TCreateFieldMetaProps>): TFields<T> => {
-    return Object.keys(fields)
-        .reduce<Record<T, TFieldMeta>>((acc, key) => {
-            acc[key as T] = createField(fields[key as T]);
-            return acc;
-        }, {} as Record<T, TFieldMeta>);
-}
+import {
+    createNewFields,
+    getRawFieldsData,
+    TCreateFieldMetaProps,
+    TFieldName,
+    TFields,
+    TFieldValue,
+} from "./field.js";
 
 
-export type TFieldRender = (props: {
+type TFieldRender = (props: {
     value: TFieldValue,
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
 }) => React.ReactNode
 
-export type TFieldComponentProps<T extends TFieldName> = {
+type TFieldComponentProps<T extends TFieldName> = {
     name: T,
     render: TFieldRender,
+    linkedValidations?: T[]
 }
 
-
-export type TFormValidators = {
-    onChange?: ReturnType<typeof z.object>
-
+type TFormValidators = {
+    onChange?: ReturnType<typeof z.object> | z.ZodEffects<z.ZodObject<any>>
 }
 
-export type TGetFormFieldProps = {
-    validators: TFormValidators
-}
-
-
-export type TUseFormProps<T extends TFieldName> = {
+type TUseFormProps<T extends TFieldName> = {
     fields: Record<T, TCreateFieldMetaProps>
-    validators?: TFormValidators
-}
-
-
-const FormContext = React.createContext<{
-    fields: TFields<TFieldName>
-    setFields: React.Dispatch<React.SetStateAction<TFields<any>>>
-} | null>(null)
-
-
-export const getRawFieldsData = (fields: TFields<any>) => {
-
-    const fieldKeys = Object.keys(fields)
-
-    return fieldKeys.reduce((acc, key) => {
-        acc[key] = fields[key]?.value || ""
-        return acc
-    }, {} as Record<TFieldName, TFieldValue>)
+    validators?: TFormValidators,
 }
 
 
 export const useForm = <T extends TFieldName>(props: TUseFormProps<T>) => {
     const fieldsStore = new Store(createNewFields(props.fields))
-    const useSelector = (selector: (fields: TFields<T>) => any) => {
-        return useStore(fieldsStore, selector)
+    function useSelector<TResult>(selector: (state: typeof fieldsStore['state']) => TResult): TResult {
+        return useStore(fieldsStore, selector);
     }
 
     const setFieldErrors = (name: T, errors: string[]) => {
@@ -109,11 +50,27 @@ export const useForm = <T extends TFieldName>(props: TUseFormProps<T>) => {
         })
     }
 
+    const validate = (props: {
+        fields: TFields<any>,
+        validationFunction: z.ZodObject<any>['safeParse']
+    }) => {
+        const rawValues = getRawFieldsData(props.fields)
+        const res = props.validationFunction(rawValues)
+        Object.keys(props.fields).forEach((key) => {
+            setFieldErrors(key as T, [])
+        })
+        if (res?.error) {
+            res.error.issues.map((i)=>{
+                setFieldErrors(i.path[0] as T, [i.message])
+            })
+        } else {
+        }
+    }
+
     const Field = (fieldProps: TFieldComponentProps<T>) => {
 
-
         const fieldMeta = useSelector((state)=> state[fieldProps.name])
-        const fields= useStore(fieldsStore, (state)=> state)
+        const fields = useSelector((state)=> state)
 
         return fieldProps.render({
             value: fieldMeta.value || "",
@@ -127,19 +84,23 @@ export const useForm = <T extends TFieldName>(props: TUseFormProps<T>) => {
                 }
                 fieldsStore.setState(()=>newFields)
 
-                const rawValues = getRawFieldsData(newFields)
-                const res = props.validators?.onChange?.safeParse(rawValues)
-                setFieldErrors(fieldProps.name, [])
-                if (res?.error) {
-                    setFieldErrors(fieldProps.name, res.error.issues.map((i)=>i.message))
+                if (props.validators?.onChange) {
+                    validate({
+                        fields: newFields,
+                        validationFunction: props.validators.onChange.safeParse
+                    })
                 }
+
             }
         })
     }
 
+
+
     return {
         Field,
         useSelector,
+        setFieldErrors,
     }
 
 }
