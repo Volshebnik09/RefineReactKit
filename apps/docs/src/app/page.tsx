@@ -27,6 +27,8 @@ const SubmitButton = (props: {
     </button>
 }
 
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
+
 export default function Home() {
 
 
@@ -43,14 +45,15 @@ export default function Home() {
             onMount: validation,
             beforeSubmit: validation
         },
-        onSubmit: (e) => {
+        onSubmit: async (e) => {
             e.preventDefault()
             const formData = new FormData(e.target as HTMLFormElement)
 
             const values = Object.fromEntries(formData.entries());
-            console.log(values);
 
-            form.setFieldErrors('image', ['FFFFF'])
+            await sleep(1000)
+
+            // form.setFieldErrors('image', ['FFFFF'])
         }
     })
 
@@ -107,6 +110,7 @@ export default function Home() {
                 />
                 <br/>
                 <SubmitButton form={form}/>
+                {form.isLoading && 'Loading...'}
             </form.Form>
 
         </div>

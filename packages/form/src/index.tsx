@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import {z, ZodError} from "zod";
 import {Store, useStore} from "@tanstack/react-store";
 import {
@@ -32,7 +32,7 @@ type TFormValidators = {
 type TUseFormProps<T extends TFieldName> = {
     fields: TFieldsToCreate<T>
     validators?: TFormValidators,
-    onSubmit?: (e: React.FormEvent<HTMLFormElement>) => void
+    onSubmit?: (e: React.FormEvent<HTMLFormElement>) => Promise<void>
 }
 
 
@@ -51,6 +51,18 @@ const getRawValues = (props: {
 
 export const useForm = <T extends TFieldName>(props: TUseFormProps<T>) => {
     const fieldsStore = useMemo(() => new Store(createNewFields({fields: props.fields})), []);
+    const [isLoading, setIsLoading] = useState(true)
+
+    useEffect(()=>{
+        if (props.validators?.onMount) {
+            validate({
+                fields: fieldsStore.state,
+                validationFunction: props.validators.onMount.safeParse
+            })
+        }
+
+        setIsLoading(false)
+    }, [])
 
     function useSelector<TResult>(selector: (state: typeof fieldsStore['state']) => TResult): TResult {
         return useStore(fieldsStore, selector);
@@ -143,19 +155,10 @@ export const useForm = <T extends TFieldName>(props: TUseFormProps<T>) => {
     const useCanSubmit = () => {
         const fields = useSelector((state) => state)
         const fieldKeys = Object.keys(fields)
-        return fieldKeys.every((key) => fields[key as T].errors.length === 0)
+        return fieldKeys.every((key) => fields[key as T].errors.length === 0) && !isLoading
     }
 
-    useEffect(()=>{
-        if (props.validators?.onMount) {
-            validate({
-                fields: fieldsStore.state,
-                validationFunction: props.validators.onMount.safeParse
-            })
-        }
-    }, [])
-
-    const onSubmit = (onSubmitProps: {
+    const onSubmit = async (onSubmitProps: {
         fields: TFields<T>,
         e: React.FormEvent<HTMLFormElement>
     }) => {
@@ -172,7 +175,7 @@ export const useForm = <T extends TFieldName>(props: TUseFormProps<T>) => {
 
         if (!errors) {
             if (props.onSubmit) {
-                props.onSubmit(onSubmitProps.e)
+                await props.onSubmit(onSubmitProps.e)
             }
         }
     }
@@ -182,11 +185,13 @@ export const useForm = <T extends TFieldName>(props: TUseFormProps<T>) => {
         return <form
             {...formProps}
             ref={formRef}
-            onSubmit={(e)=>{
-                onSubmit({
+            onSubmit={async (e)=>{
+                setIsLoading(true)
+                await onSubmit({
                     fields,
                     e
                 })
+                setIsLoading(false)
             }}
         />
 
@@ -198,6 +203,7 @@ export const useForm = <T extends TFieldName>(props: TUseFormProps<T>) => {
         Field: React.useMemo(() => Field, []),
         Form: React.useMemo(() => Form, []),
         useSelector,
+        isLoading,
         setFieldErrors,
         useCanSubmit,
     } as const
