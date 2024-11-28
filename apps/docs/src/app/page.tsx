@@ -44,6 +44,7 @@ export default function Home() {
         }
     })
 
+
     return (
         <div>
             <form
@@ -55,6 +56,7 @@ export default function Home() {
                     const values = Object.fromEntries(formData.entries());
                     console.log(values); // { username: "value", email: "value" }
 
+                    form.setFieldErrors('image', ['FFFFF'])
                 }}
             >
                 <form.Field
