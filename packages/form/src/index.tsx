@@ -24,8 +24,8 @@ type TFieldComponentProps<T extends TFieldName> = {
 }
 
 type TFormValidators = {
-    onChange?: ReturnType<typeof z.object> | z.ZodEffects<z.ZodObject<any>>
-    onMount?: z.ZodObject<any>| z.ZodEffects<z.ZodObject<any>>
+    onChange?:  z.ZodObject<any> | z.ZodEffects<any>
+    onMount?: z.ZodObject<any> | z.ZodEffects<any>
 }
 
 type TUseFormProps<T extends TFieldName> = {
@@ -33,12 +33,25 @@ type TUseFormProps<T extends TFieldName> = {
     validators?: TFormValidators,
 }
 
+const getRawValues = (props: {
+    formRef: React.RefObject<HTMLFormElement>,
+    fields: TFields<any>
+}) => {
+    if (props.formRef.current) {
+        const formData = new FormData(props.formRef.current as HTMLFormElement)
+
+        return Object.fromEntries(formData.entries());
+    } else {
+        return getRawFieldsData(props.fields)
+    }
+}
 
 export const useForm = <T extends TFieldName>(props: TUseFormProps<T>) => {
     const fieldsStore = new Store(createNewFields({fields:props.fields}))
     function useSelector<TResult>(selector: (state: typeof fieldsStore['state']) => TResult): TResult {
         return useStore(fieldsStore, selector);
     }
+    const formRef = React.useRef<HTMLFormElement>(null)
 
     const setFieldErrors = (name: T, errors: string[]) => {
         fieldsStore.setState((fields) => {
@@ -65,11 +78,16 @@ export const useForm = <T extends TFieldName>(props: TUseFormProps<T>) => {
         })
     }
 
+
     const validate = (props: {
         fields: TFields<any>,
         validationFunction: z.ZodObject<any>['safeParse']
     }) => {
-        const rawValues = getRawFieldsData(props.fields)
+
+        const rawValues = getRawValues({
+            formRef: formRef,
+            fields: props.fields
+        })
         const res = props.validationFunction(rawValues)
         Object.keys(props.fields).forEach((key) => {
             setFieldErrors(key as T, [])
@@ -125,7 +143,9 @@ export const useForm = <T extends TFieldName>(props: TUseFormProps<T>) => {
         })
     }
 
+
     return {
+        formRef,
         Field,
         useSelector,
         setFieldErrors,

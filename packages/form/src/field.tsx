@@ -1,4 +1,4 @@
-export type TFieldValue = string
+export type TFieldValue = string | File
 export type TFieldName = string
 
 export type TFieldMeta = {
