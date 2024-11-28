@@ -1,5 +1,5 @@
 import React from "react";
-import {z} from "zod";
+import {z, ZodError} from "zod";
 import {Store, useStore} from "@tanstack/react-store";
 import {
     createNewFields,
@@ -24,13 +24,15 @@ type TFieldComponentProps<T extends TFieldName> = {
 }
 
 type TFormValidators = {
-    onChange?:  z.ZodObject<any> | z.ZodEffects<any>
+    onChange?: z.ZodObject<any> | z.ZodEffects<any>
     onMount?: z.ZodObject<any> | z.ZodEffects<any>
+    beforeSubmit?: z.ZodObject<any> | z.ZodEffects<any>
 }
 
 type TUseFormProps<T extends TFieldName> = {
     fields: TFieldsToCreate<T>
     validators?: TFormValidators,
+    onSubmit?: (e: React.FormEvent<HTMLFormElement>) => void
 }
 
 
@@ -48,32 +50,36 @@ const getRawValues = (props: {
 }
 
 export const useForm = <T extends TFieldName>(props: TUseFormProps<T>) => {
-    const fieldsStore = new Store(createNewFields({fields:props.fields}))
+    const fieldsStore = new Store(createNewFields({fields: props.fields}))
+
     function useSelector<TResult>(selector: (state: typeof fieldsStore['state']) => TResult): TResult {
         return useStore(fieldsStore, selector);
     }
+
     const formRef = React.useRef<HTMLFormElement>(null)
 
-    const setFieldErrors = (name: T, errors: string[]) => {
+    const setFieldErrors = (name: T, errors: string[], forceTouch?: boolean) => {
         fieldsStore.setState((fields) => {
             return {
                 ...fields,
                 [name]: {
                     ...fields[name],
-                    errors: errors
+                    errors: errors,
+                    touched: forceTouch ? true : fields[name].touched
                 }
             }
         })
     }
 
-    const appendErrors = (name: T, errors: string[]) => {
+    const appendErrors = (name: T, errors: string[], forceTouch?: boolean) => {
         fieldsStore.setState((fields) => {
             const set = new Set([...fields[name].errors, ...errors])
             return {
                 ...fields,
                 [name]: {
                     ...fields[name],
-                    errors: Array.from(set)
+                    errors: Array.from(set),
+                    touched: forceTouch ? true : fields[name].touched
                 }
             }
         })
@@ -82,29 +88,30 @@ export const useForm = <T extends TFieldName>(props: TUseFormProps<T>) => {
 
     const validate = (props: {
         fields: TFields<any>,
-        validationFunction: z.ZodObject<any>['safeParse']
+        validationFunction: z.ZodObject<any>['safeParse'],
+        forceTouch?: boolean
     }) => {
+        Object.keys(props.fields).forEach((key) => {
+            setFieldErrors(key as T, [])
+        })
 
         const rawValues = getRawValues({
             formRef: formRef,
             fields: props.fields
         })
         const res = props.validationFunction(rawValues)
-        Object.keys(props.fields).forEach((key) => {
-            setFieldErrors(key as T, [])
-        })
         if (res?.error) {
-            res.error.issues.map((i)=>{
-                appendErrors(i.path[0] as T, [i.message])
+            res.error.issues.map((i) => {
+                appendErrors(i.path[0] as T, [i.message],props.forceTouch)
             })
-        } else {
+            return res?.error
         }
     }
 
     const Field = (fieldProps: TFieldComponentProps<T>) => {
 
-        const fieldMeta = useSelector((state)=> state[fieldProps.name])
-        const fields = useSelector((state)=> state)
+        const fieldMeta = useSelector((state) => state[fieldProps.name])
+        const fields = useSelector((state) => state)
 
         return fieldProps.render({
             value: fieldMeta.value || "",
@@ -118,13 +125,15 @@ export const useForm = <T extends TFieldName>(props: TUseFormProps<T>) => {
                         touched: true
                     }
                 }
-                fieldsStore.setState(()=>newFields)
+                fieldsStore.setState(() => newFields)
 
                 if (props.validators?.onChange) {
                     validate({
                         fields: newFields,
                         validationFunction: props.validators.onChange.safeParse
                     })
+                } else {
+                    setFieldErrors(fieldProps.name, [])
                 }
 
             }
@@ -144,17 +153,55 @@ export const useForm = <T extends TFieldName>(props: TUseFormProps<T>) => {
         })
     }
 
+    const onSubmit = (onSubmitProps: {
+        fields: TFields<T>,
+        e: React.FormEvent<HTMLFormElement>
+    }) => {
+        onSubmitProps.e.preventDefault()
+
+        let errors: ZodError<{ [x: string]: any; }> | undefined = undefined
+        if (props.validators?.beforeSubmit) {
+            errors = validate({
+                fields: onSubmitProps.fields,
+                validationFunction: props.validators?.beforeSubmit.safeParse,
+                forceTouch: true
+            })
+        }
+
+        if (!errors) {
+            if (props.onSubmit) {
+                props.onSubmit(onSubmitProps.e)
+            }
+        }
+    }
+
+    const Form = (formProps: React.FormHTMLAttributes<HTMLFormElement>) => {
+        const fields = useSelector((state) => state)
+        return <form
+            {...formProps}
+            ref={formRef}
+            onSubmit={(e)=>{
+                onSubmit({
+                    fields,
+                    e
+                })
+            }}
+        />
+
+    }
+
 
     return {
         formRef,
         Field,
+        Form,
         useSelector,
         setFieldErrors,
         useCanSubmit,
     } as const
 }
 
-export type TForm <T extends TFieldName = any> = ReturnType<typeof useForm<T>>
+export type TForm<T extends TFieldName = any> = ReturnType<typeof useForm<T>>
 
 export type {
     TFieldsToCreate

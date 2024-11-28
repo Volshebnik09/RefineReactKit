@@ -40,27 +40,26 @@ export default function Home() {
         },
         validators: {
             onChange: validation,
-            onMount: validation
+            onMount: validation,
+            beforeSubmit: validation
+        },
+        onSubmit: (e) => {
+            e.preventDefault()
+            const formData = new FormData(e.target as HTMLFormElement)
+
+            const values = Object.fromEntries(formData.entries());
+            console.log(values);
+
+            form.setFieldErrors('image', ['FFFFF'])
         }
     })
 
 
     return (
         <div>
-            <form
-                ref={form.formRef}
-                onSubmit={e => {
-                    e.preventDefault()
-                    const formData = new FormData(e.target as HTMLFormElement)
-
-                    const values = Object.fromEntries(formData.entries());
-                    console.log(values); // { username: "value", email: "value" }
-
-                    form.setFieldErrors('image', ['FFFFF'])
-                }}
-            >
+            <form.Form>
                 <form.Field
-                    name={'image'}
+                    name={'password'}
                     render={(props) =>
                         <div>
                             <input
@@ -108,7 +107,7 @@ export default function Home() {
                 />
                 <br/>
                 <SubmitButton form={form}/>
-            </form>
+            </form.Form>
 
         </div>
     )
