@@ -16,6 +16,9 @@
   "engines": {
     "node": ">=18"
   },
-  "repository": "volshebnik09/RefineReactKit",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/volshebnik09/RefineReactKit.git"
+  },
   "author": "sin <shulgin.grigoriy@yandex.ru>"
 }

@@ -30,7 +30,10 @@
   "files": [
     "dist"
   ],
-  "repository": "volshebnik09/RefineReactKit",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/volshebnik09/RefineReactKit.git"
+  },
   "publishConfig": {
     "access": "public",
     "provenance": true
