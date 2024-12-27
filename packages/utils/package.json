@@ -2,7 +2,6 @@
   "name": "@refine-react-kit/utils",
   "version": "0.0.0",
   "type": "module",
-  "private": true,
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -25,5 +24,12 @@
   "dependencies": {
     "react": "19.0.0-rc-5c56b873-20241107",
     "react-dom": "19.0.0-rc-5c56b873-20241107"
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "scope": ["/packages/**"]
   }
 }

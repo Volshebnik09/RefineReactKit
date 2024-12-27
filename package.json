@@ -8,12 +8,18 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/npm": "^12.0.1",
     "prettier": "^3.2.5",
+    "semantic-release": "^24.2.0",
     "turbo": "^2.3.3",
     "typescript": "5.5.4"
   },
   "packageManager": "pnpm@9.0.0",
   "engines": {
     "node": ">=18"
-  }
+  },
+  "repository": "volshebnik09/RefineReactKit",
+  "author": "sin <shulgin.grigoriy@yandex.ru>"
 }
