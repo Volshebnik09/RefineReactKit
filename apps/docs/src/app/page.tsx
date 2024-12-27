@@ -47,11 +47,13 @@ export default function Home() {
         },
         onSubmit: async (e) => {
             e.preventDefault()
-            // const formData = new FormData(e.target as HTMLFormElement)
+            const formData = new FormData(e.target as HTMLFormElement)
 
-            // const values = Object.fromEntries(formData.entries());
+            const values = Object.fromEntries(formData.entries());
 
             await sleep(1000)
+
+            console.log(values)
 
             // form.setFieldErrors('image', ['FFFFF'])
         }
