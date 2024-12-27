@@ -32,7 +32,8 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/volshebnik09/RefineReactKit.git"
+    "url": "https://github.com/volshebnik09/RefineReactKit.git",
+    "directory": "packages/ui"
   },
   "publishConfig": {
     "access": "public",
