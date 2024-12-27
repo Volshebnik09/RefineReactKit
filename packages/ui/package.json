@@ -30,7 +30,9 @@
   "files": [
     "dist"
   ],
+  "repository": "volshebnik09/RefineReactKit",
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "provenance": true
   }
 }

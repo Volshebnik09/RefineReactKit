@@ -28,8 +28,9 @@
   "files": [
     "dist"
   ],
+  "repository": "volshebnik09/RefineReactKit",
   "publishConfig": {
     "access": "public",
-    "scope": ["/packages/**"]
+    "provenance": true
   }
 }
