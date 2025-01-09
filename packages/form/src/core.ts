@@ -1,4 +1,4 @@
-import {Store} from "@tanstack/react-store";
+import {Store, useStore} from "@tanstack/react-store";
 import {createNewFields, TFieldMeta, TFieldName, TFieldsToCreate} from "./field.js";
 import {z} from "zod";
 import React from "react";
@@ -18,12 +18,15 @@ export const createFormCore = <T extends TFieldName>(props: {
 }) => {
     const store = new Store({
         fields: createNewFields({fields: props.fields}),
-        isLoading: false,
+        isLoading: true,
         validators: props.validators,
         formRef: null as React.RefObject<HTMLFormElement> | null,
         haveErrors: false as boolean
     })
 
+     function useSelector <TResult>(selector: (state: typeof store.state) => TResult): TResult {
+        return useStore(store, selector);
+    }
 
     const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -110,7 +113,14 @@ export const createFormCore = <T extends TFieldName>(props: {
     })
 
     return {
+        useSelector,
         store,
+        updateIsLoading: (isLoading: boolean) => store.setState((state) => {
+            return {
+                ...state,
+                isLoading
+            }
+        }),
         onSubmit,
         setFormRef,
         setFieldErrors: setCurrentStoreFieldErrors,

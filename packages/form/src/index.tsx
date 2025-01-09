@@ -1,5 +1,4 @@
 import React from "react";
-import {useStore} from "@tanstack/react-store";
 import {createReactItem, TFieldName, TFieldsToCreate,} from "./field.js";
 import {createFormCore, TFormValidators} from "./core.js";
 import {createReactForm} from "./form.js";
@@ -18,10 +17,8 @@ export const createForm = <T extends TFieldName>(props: TUseFormProps<T>) => {
     })
 
     return {
-        core: core,
-        useSelector: function <TResult>(selector: (state: typeof core.store.state) => TResult): TResult {
-            return useStore(core.store, selector);
-        },
+        validateFields: core.validateFields,
+        useSelector: core.useSelector,
         appendErrors: core.appendErrors,
         setFieldErrors: core.setFieldErrors,
         Item: createReactItem({

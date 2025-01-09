@@ -1,4 +1,3 @@
-import {useStore} from "@tanstack/react-store";
 import React from "react";
 import {TFormCore} from "./core.js";
 
@@ -81,7 +80,7 @@ type TCreateItemProps<T extends TFieldName>= {
 
 export const createReactItem = <T extends TFieldName>(props: TCreateItemProps<T>) =>
     (itemProps: TFieldComponentProps<T>) => {
-        const fieldMeta = useStore(props.core.store, (state) => state.fields[itemProps.name])
+        const fieldMeta = props.core.useSelector((state) => state.fields[itemProps.name])
 
         return itemProps.render({
             value: fieldMeta.value || "",
