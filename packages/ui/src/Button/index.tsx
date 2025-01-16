@@ -1,5 +1,4 @@
 import styled from "@emotion/styled";
-
 type ButtonProps = {
     primary?: boolean
 }

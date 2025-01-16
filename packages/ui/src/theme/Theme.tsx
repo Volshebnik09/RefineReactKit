@@ -17,3 +17,5 @@ const ThemeProvider = (props:React.PropsWithChildren) => {
 export {
     ThemeProvider
 }
+
+export type TTheme = typeof defaultTheme

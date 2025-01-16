@@ -1,7 +1,7 @@
 'use client';
 import {ThemeProvider, UIRegistry} from "@refine-react-kit/ui";
 
-export default (props: React.PropsWithChildren) => {
+const Layout = (props: React.PropsWithChildren) => {
     return (
         <UIRegistry>
             <ThemeProvider>
@@ -10,3 +10,5 @@ export default (props: React.PropsWithChildren) => {
         </UIRegistry>
     )
 }
+
+export default Layout
