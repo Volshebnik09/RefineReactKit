@@ -1,10 +1,12 @@
 'use client';
-import {UIRegistry} from "@refine-react-kit/ui";
+import {ThemeProvider, UIRegistry} from "@refine-react-kit/ui";
 
 export default (props: React.PropsWithChildren) => {
     return (
         <UIRegistry>
-            {props.children}
+            <ThemeProvider>
+                {props.children}
+            </ThemeProvider>
         </UIRegistry>
     )
 }

@@ -31,7 +31,7 @@ function UIRegistry(props: AppRouterCacheProviderProps) {
     const { options, CacheProvider = DefaultCacheProvider, children } = props;
 
     const [registry] = React.useState(() => {
-        const cache = createCache({ ...options, key: options?.key ?? 'mui' });
+        const cache = createCache({ ...options, key: options?.key ?? 'css' });
         cache.compat = true;
 
         const prevInsert = cache.insert;
@@ -39,7 +39,7 @@ function UIRegistry(props: AppRouterCacheProviderProps) {
         // Override the insert method to support streaming SSR with flush().
         cache.insert = (...args) => {
             if (options?.enableCssLayer) {
-                args[1].styles = `@layer mui {${args[1].styles}}`;
+                args[1].styles = `@layer {${args[1].styles}}`;
             }
             const [selector, serialized] = args;
             if (cache.inserted[serialized.name] === undefined) {

@@ -1,9 +1,14 @@
 import styled from "@emotion/styled";
-import React from "react";
 
-const Button = styled.button`
-  color: turquoise;
-`
+type ButtonProps = {
+    primary?: boolean
+}
+
+const Button = styled.button<ButtonProps>(props=>({
+    color: 'red',
+    backgroundColor: props.primary ? 'yellow' : 'blue',
+    fontSize: props.theme.fontSize?.main || '18px'
+}))
 
 export {
     Button
