@@ -10,7 +10,7 @@ const MainBody = (props: React.PropsWithChildren) => {
 
     return (
         <body style={{
-            background: getThemeValue(currentTheme, 'colors.secondaryBackground')
+            background: getThemeValue(currentTheme, 'colors.button.secondary')
         }}>
         {props.children}
         </body>

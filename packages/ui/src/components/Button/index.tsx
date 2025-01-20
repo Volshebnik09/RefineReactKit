@@ -1,25 +1,27 @@
 import styled from "@emotion/styled";
 import {getThemeValue} from "@/theme/Theme.js";
-type ButtonProps = {
-    primary?: boolean
+
+type StyledButtonProps = {
+    primary?: boolean,
+    icon?: React.ReactNode,
 }
 
-const Button = styled.button<ButtonProps>((props) => {
-    const { primary, disabled, theme } = props;
+const StyledButton = styled.button<StyledButtonProps>((props) => {
+    const {primary, disabled, theme} = props;
     const fontSize = getThemeValue(theme, 'fontSize.sm');
     const padding = `${getThemeValue(theme, 'spacing.xs')} ${getThemeValue(theme, 'spacing.md')}`;
     const borderRadius = getThemeValue(theme, 'borderRadius.md');
 
     const shadows = getThemeValue(theme, 'shadows.sm');
     const backgroundColor = primary ?
-        getThemeValue(theme, 'colors.button.primary'):
+        getThemeValue(theme, 'colors.button.primary') :
         getThemeValue(theme, 'colors.button.secondary');
     const border = primary ?
-        'none':
+        'none' :
         `1px solid #a3a3a3`;
 
     const color = primary ?
-        getThemeValue(theme, 'colors.button.textPrimary'):
+        getThemeValue(theme, 'colors.button.textPrimary') :
         getThemeValue(theme, 'colors.button.textSecondary');
     const fontFamily = getThemeValue(theme, 'fonts-family.primary');
 
@@ -33,10 +35,11 @@ const Button = styled.button<ButtonProps>((props) => {
         cursor: disabled ? 'not-allowed' : 'pointer',
         transition: '0.1s ease',
         boxShadow: shadows,
-        height:`32px`,
+        height: `32px`,
         display: 'inline-flex',
         alignItems: 'center',
         justifyContent: 'center',
+        gap: '8px',
         fontFamily,
 
         '&:hover': {
@@ -49,6 +52,18 @@ const Button = styled.button<ButtonProps>((props) => {
     };
 });
 
+const Button = (props: React.ComponentProps<typeof StyledButton>) => {
+    return <StyledButton {...props} >
+        {props.icon &&
+            <span>
+                {props.icon}
+            </span>
+        }
+        <span>
+            {props.children}
+        </span>
+    </StyledButton>
+}
 
 export {
     Button
