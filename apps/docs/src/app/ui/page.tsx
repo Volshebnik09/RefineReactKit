@@ -1,5 +1,5 @@
 "use client";
-import {Button} from "@refine-react-kit/ui";
+import {Button, Panel} from "@refine-react-kit/ui";
 import React from "react";
 
 export default function Home() {
@@ -11,6 +11,9 @@ export default function Home() {
             <Button>
                 3000
             </Button>
+            <Panel>
+                123123
+            </Panel>
         </div>
     )
 }
