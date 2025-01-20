@@ -12,14 +12,14 @@ export default function Home() {
     return (
         <div>
             <Button>
-                1000
+                default
             </Button>
-            <Button>
-                3000
+            <Button primary>
+                primary
             </Button>
-            <Panel>
-                123123
-            </Panel>
+            <Button disabled>
+                disabled
+            </Button>
         </div>
     )
 }

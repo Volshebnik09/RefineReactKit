@@ -2,47 +2,40 @@ import {TRecursivePartial} from "@/utils.js";
 
 const defaultTheme = {
     colors: {
-        "primaryBackground": "#FFFFFF",
-        "secondaryBackground": "#F5F5F5",
-        "text": "#333333",
-        "accent": "#6200EE",
-        "accentHover": "#3700B3",
-        "error": "#B00020",
-        "success": "#00C853",
-        "warning": "#FFAB00",
-        "disabled": "#9E9E9E"
+        button: {
+            primary: "#007BFF",
+            secondary: "#ffffff",
+            textPrimary: "#fff",
+            textSecondary: "#000",
+        }
+    },
+    "fonts-family": {
+      primary: "sans-serif",
     },
     fontSize: {
-        xs: '0.75rem', // 12px
-        sm: '1rem',    // 16px
-        md: '1.25rem', // 20px
-        lg: '1.5rem',  // 24px
-        xl: '2rem',    // 32px
-        xxl: '2.5rem', // 40px
+        xs: '0.75rem',
+        sm: '1rem',
+        md: '1.25rem',
+        lg: '1.5rem',
+        xl: '2rem',
+        xxl: '2.5rem',
     },
     spacing: {
-        xs: '0.25rem', // 4px
-        sm: '0.5rem',  // 8px
-        md: '1rem',    // 16px
-        lg: '1.5rem',  // 24px
-        xl: '2rem',    // 32px
+        xs: '0.25rem',
+        sm: '0.5rem',
+        md: '1rem',
+        lg: '1.5rem',
+        xl: '2rem',
     },
     borderRadius: {
-        sm: '0.25rem', // 4px
-        md: '0.5rem',  // 8px
-        lg: '1rem',    // 16px
+        sm: '0.25rem',
+        md: '0.5rem',
+        lg: '1rem',
     },
     shadows: {
         sm: '0px 1px 3px rgba(0, 0, 0, 0.12)',
         md: '0px 3px 6px rgba(0, 0, 0, 0.16)',
         lg: '0px 6px 10px rgba(0, 0, 0, 0.24)',
-    },
-    typography: {
-        fontFamily: "'Roboto', sans-serif",
-        fontWeightLight: 300,
-        fontWeightRegular: 400,
-        fontWeightMedium: 500,
-        fontWeightBold: 700,
     },
     breakpoints: {
         xs: '0px',

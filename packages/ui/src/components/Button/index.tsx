@@ -6,31 +6,39 @@ type ButtonProps = {
 
 const Button = styled.button<ButtonProps>((props) => {
     const { primary, disabled, theme } = props;
-
-    const primaryColor = getThemeValue(theme, 'colors.primaryBackground');
-    const defaultColor = getThemeValue(theme, 'colors.secondaryBackground');
-    const textColor = getThemeValue(theme, 'colors.text');
-    const fontSize = getThemeValue(theme, 'fontSize.md');
-    const padding = getThemeValue(theme, 'spacing.md');
+    const fontSize = getThemeValue(theme, 'fontSize.sm');
+    const padding = `${getThemeValue(theme, 'spacing.sm')} ${getThemeValue(theme, 'spacing.md')}`;
     const borderRadius = getThemeValue(theme, 'borderRadius.md');
+    const borderColor = '#a3a3a3'
+    const shadows = getThemeValue(theme, 'shadows.sm');
+    const backgroundColor = primary ?
+        getThemeValue(theme, 'colors.button.primary'):
+        getThemeValue(theme, 'colors.button.secondary');
+
+    const color = primary ?
+        getThemeValue(theme, 'colors.button.textPrimary'):
+        getThemeValue(theme, 'colors.button.textSecondary');
+    const fontFamily = getThemeValue(theme, 'fonts-family.primary');
 
     return {
-        backgroundColor: primary ? primaryColor : defaultColor,
-        color: textColor,
-        fontSize: fontSize,
-        padding: padding,
-        borderRadius: borderRadius,
-        border: 'none',
+        backgroundColor,
+        color,
+        fontSize,
+        padding,
+        borderRadius,
+        borderColor,
+        border: `1px solid ${borderColor}`,
         cursor: disabled ? 'not-allowed' : 'pointer',
-        opacity: disabled ? 0.6 : 1,
-        transition: 'opacity 0.2s ease',
+        transition: '0.1s ease',
+        boxShadow: shadows,
+        fontFamily,
 
         '&:hover': {
-            opacity: disabled ? 0.6 : 0.9,
+            filter: disabled ? 'none' : 'brightness(0.94)',
         },
 
         '&:active': {
-            opacity: disabled ? 0.6 : 0.8,
+            filter: disabled ? 'none' : 'brightness(0.9)',
         },
     };
 });

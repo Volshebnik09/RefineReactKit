@@ -13,9 +13,6 @@ const MainBody = (props: React.PropsWithChildren) => {
             background: getThemeValue(currentTheme, 'colors.secondaryBackground')
         }}>
         {props.children}
-        <pre>
-            {JSON.stringify(currentTheme)}
-        </pre>
         </body>
     )
 }
