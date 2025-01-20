@@ -1,17 +1,17 @@
 import { ThemeProvider as EmotionThemeProvider } from '@emotion/react'
-import {deepMerge, TRecursivePartial} from "@/utils.js";
+import {deepMerge, TPath, TRecursivePartial} from "@/utils.js";
 
 const defaultTheme = {
     colors: {
-        primary: '#0070f3',
-        secondary: '#1c1c1e',
-        background: '#ffffff',
-        surface: '#f0f0f0',
-        error: '#d32f2f',
-        success: '#388e3c',
-        warning: '#f57c00',
-        textPrimary: '#212121',
-        textSecondary: '#757575',
+        "primaryBackground": "#FFFFFF",
+        "secondaryBackground": "#F5F5F5",
+        "text": "#333333",
+        "accent": "#6200EE",
+        "accentHover": "#3700B3",
+        "error": "#B00020",
+        "success": "#00C853",
+        "warning": "#FFAB00",
+        "disabled": "#9E9E9E"
     },
     fontSize: {
         xs: '0.75rem', // 12px
@@ -60,7 +60,7 @@ const defaultTheme = {
     },
 };
 
-export type TTheme = TRecursivePartial<typeof defaultTheme>
+type TTheme = TRecursivePartial<typeof defaultTheme>
 
 const ThemeProvider = (props:React.PropsWithChildren<{
     theme?: TTheme
@@ -74,13 +74,6 @@ const ThemeProvider = (props:React.PropsWithChildren<{
     )
 }
 
-type TPath<T> = T extends object
-    ? {
-        [K in keyof T]: K extends string
-            ? `${K}` | `${K}.${TPath<T[K]> & string}`
-            : never;
-    }[keyof T]
-    : never;
 
 type TGetThemeValueType<T, P extends TPath<T>> = P extends `${infer K}.${infer Rest}`
     ? K extends keyof T
@@ -120,4 +113,8 @@ const getThemeValue = <P extends NonNullable<TPath<TTheme>>>(
 export {
     ThemeProvider,
     getThemeValue
+}
+
+export type {
+    TTheme
 }

@@ -24,3 +24,11 @@ export const deepMerge = <T extends object>(target: T, source: TRecursivePartial
     }
     return result;
 };
+
+export type TPath<T> = T extends object
+    ? {
+        [K in keyof T]: K extends string
+            ? `${K}` | `${K}.${TPath<T[K]> & string}`
+            : never;
+    }[keyof T]
+    : never;

@@ -7,15 +7,16 @@ type ButtonProps = {
 const Button = styled.button<ButtonProps>((props) => {
     const { primary, disabled, theme } = props;
 
-    const primaryColor = getThemeValue(theme, 'colors.primary');
-    const secondaryColor = getThemeValue(theme, 'colors.secondary');
-    const textColor = getThemeValue(theme, 'colors.textPrimary');
+    const primaryColor = getThemeValue(theme, 'colors.primaryBackground');
+    console.log(theme)
+    const defaultColor = getThemeValue(theme, 'colors.secondaryBackground');
+    const textColor = getThemeValue(theme, 'colors.text');
     const fontSize = getThemeValue(theme, 'fontSize.md');
     const padding = getThemeValue(theme, 'spacing.md');
     const borderRadius = getThemeValue(theme, 'borderRadius.md');
 
     return {
-        backgroundColor: primary ? primaryColor : secondaryColor,
+        backgroundColor: primary ? primaryColor : defaultColor,
         color: textColor,
         fontSize: fontSize,
         padding: padding,
