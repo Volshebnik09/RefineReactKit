@@ -7,13 +7,16 @@ type ButtonProps = {
 const Button = styled.button<ButtonProps>((props) => {
     const { primary, disabled, theme } = props;
     const fontSize = getThemeValue(theme, 'fontSize.sm');
-    const padding = `${getThemeValue(theme, 'spacing.sm')} ${getThemeValue(theme, 'spacing.md')}`;
+    const padding = `${getThemeValue(theme, 'spacing.xs')} ${getThemeValue(theme, 'spacing.md')}`;
     const borderRadius = getThemeValue(theme, 'borderRadius.md');
-    const borderColor = '#a3a3a3'
+
     const shadows = getThemeValue(theme, 'shadows.sm');
     const backgroundColor = primary ?
         getThemeValue(theme, 'colors.button.primary'):
         getThemeValue(theme, 'colors.button.secondary');
+    const border = primary ?
+        'none':
+        `1px solid #a3a3a3`;
 
     const color = primary ?
         getThemeValue(theme, 'colors.button.textPrimary'):
@@ -26,11 +29,14 @@ const Button = styled.button<ButtonProps>((props) => {
         fontSize,
         padding,
         borderRadius,
-        borderColor,
-        border: `1px solid ${borderColor}`,
+        border,
         cursor: disabled ? 'not-allowed' : 'pointer',
         transition: '0.1s ease',
         boxShadow: shadows,
+        height:`32px`,
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
         fontFamily,
 
         '&:hover': {
