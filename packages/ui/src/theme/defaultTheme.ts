@@ -37,19 +37,6 @@ const defaultTheme = {
         md: '0px 3px 6px rgba(0, 0, 0, 0.16)',
         lg: '0px 6px 10px rgba(0, 0, 0, 0.24)',
     },
-    breakpoints: {
-        xs: '0px',
-        sm: '600px',
-        md: '960px',
-        lg: '1280px',
-        xl: '1920px',
-    },
-    zIndex: {
-        appBar: 1100,
-        drawer: 1200,
-        modal: 1300,
-        tooltip: 1500,
-    },
 };
 
 type TTheme = TRecursivePartial<typeof defaultTheme>
