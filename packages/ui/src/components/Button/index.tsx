@@ -8,7 +8,6 @@ const Button = styled.button<ButtonProps>((props) => {
     const { primary, disabled, theme } = props;
 
     const primaryColor = getThemeValue(theme, 'colors.primaryBackground');
-    console.log(theme)
     const defaultColor = getThemeValue(theme, 'colors.secondaryBackground');
     const textColor = getThemeValue(theme, 'colors.text');
     const fontSize = getThemeValue(theme, 'fontSize.md');
