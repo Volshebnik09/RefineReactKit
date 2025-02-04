@@ -30,12 +30,15 @@ type JustifyFlags = keyof typeof justifyOptions;
 type DirectionFlags = keyof typeof directionOptions
 
 
-type FlexProps = ValidateSingleFlag<AlignFlags>
-    & ValidateSingleFlag<JustifyFlags>
-    & ValidateSingleFlag<DirectionFlags>
-    & {
+type FlexProps = {
     "no-wrap"?: boolean
     gap?: number
+} & {
+    [key in AlignFlags]?: boolean
+} & {
+    [key in JustifyFlags]?: boolean
+} & {
+    [key in DirectionFlags]?: boolean
 }
 
 const Flex = styled.div<FlexProps>(props=> {
@@ -61,4 +64,8 @@ const Flex = styled.div<FlexProps>(props=> {
 
 export {
     Flex
+}
+
+export type {
+    FlexProps
 }

@@ -8,7 +8,7 @@
   "scripts": {
     "lint": "eslint . --max-warnings 0",
     "check-types": "tsc --noEmit",
-    "dev": "father dev",
+    "dev": "father dev --incremental",
     "build": "father build"
   },
   "devDependencies": {

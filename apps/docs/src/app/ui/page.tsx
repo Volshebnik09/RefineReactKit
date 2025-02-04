@@ -1,13 +1,14 @@
 "use client";
 import React from "react";
 import {Flex} from "@refine-react-kit/ui";
-import {ButtonComponents, FlexComponents, TextComponents} from "@/widgets/UIBlocks";
+import {ButtonComponents, FlexComponents, RadioComponents, TextComponents} from "@/widgets/UIBlocks";
 
 
 
 export default function Home() {
     return (
         <Flex align-stretch justify-between>
+            <RadioComponents.DefaultRadio/>
             <ButtonComponents/>
             <TextComponents/>
             <FlexComponents.FlexVerticalCenter/>
