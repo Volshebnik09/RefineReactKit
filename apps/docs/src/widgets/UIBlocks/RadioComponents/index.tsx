@@ -10,6 +10,10 @@ const options = [
     {
         label: 'Option 2',
         value: '2'
+    },
+    {
+        label: 'Option 3',
+        value: '3'
     }
 
 ] as TOption[]
@@ -31,6 +35,19 @@ const DefaultRadio = () => {
     )
 }
 
+const BlockRadio = (props: any) => {
+    return (
+        <MainPanel>
+            <Flex column>
+                <Flex column>
+                    <RadioGroup options={options} block/>
+                </Flex>
+            </Flex>
+        </MainPanel>
+    )
+}
+
 export {
-    DefaultRadio
+    DefaultRadio,
+    BlockRadio
 }

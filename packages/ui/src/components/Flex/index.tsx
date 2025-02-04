@@ -32,7 +32,7 @@ type DirectionFlags = keyof typeof directionOptions
 
 type FlexProps = {
     "no-wrap"?: boolean
-    gap?: number
+    gap?: number | string
 } & {
     [key in AlignFlags]?: boolean
 } & {
@@ -50,7 +50,7 @@ const Flex = styled.div<FlexProps>(props=> {
     const justifyContent = justifyOptions[justifyFlag]
     const flexDirection = directionOptions[directionFlag]
 
-    const gap = props.gap || 10
+    const gap = props.gap !== undefined ? props.gap : 0
     const flexWrap = props['no-wrap'] ? 'nowrap' : 'wrap'
     return {
         display: 'flex',

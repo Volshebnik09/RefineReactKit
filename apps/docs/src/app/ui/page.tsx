@@ -9,6 +9,7 @@ export default function Home() {
     return (
         <Flex align-stretch justify-between>
             <RadioComponents.DefaultRadio/>
+            <RadioComponents.BlockRadio/>
             <ButtonComponents/>
             <TextComponents/>
             <FlexComponents.FlexVerticalCenter/>

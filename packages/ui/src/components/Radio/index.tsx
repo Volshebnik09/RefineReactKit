@@ -2,19 +2,15 @@ import styled from "@emotion/styled";
 import React from "react";
 import {Text} from "@/components/Text/index.js";
 import {Flex} from "@/components/Flex/index.js";
+import {getThemeValue} from "@/theme/index.js";
+import {Button} from "@/components/Button/index.js";
 
 type TOption = {
     label: string,
     value: string
 }
 
-type TRadioProps = {
-    name?: string,
-    value?: string,
-    checked?: boolean,
-    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void,
-    children?: React.ReactNode
-}
+
 const RadioInput = styled.input(props=>{
     return {
         appearance: 'none',
@@ -59,6 +55,14 @@ const RadioFlex = styled(Flex)((props)=>{
     }
 })
 
+type TRadioProps = {
+    name?: string,
+    value?: string,
+    checked?: boolean,
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void,
+    children?: React.ReactNode
+}
+
 const Radio = (props: TRadioProps) => {
 
     return (
@@ -90,17 +94,80 @@ const Radio = (props: TRadioProps) => {
     )
 }
 
+const BlockRadioButton = styled(Button)<{
+    active?: boolean
+}>(props=>{
+    return {
+        ...(props.active && {
+            backgroundColor: getThemeValue(props.theme, 'colors.button.primary'),
+        }),
+        borderRadius: 0,
+        "& + button": {
+            borderLeft: 'none'
+        },
+        "&:nth-child(1)": {
+            borderTopLeftRadius: getThemeValue(props.theme, 'borderRadius.md'),
+            borderBottomLeftRadius: getThemeValue(props.theme, 'borderRadius.md'),
+        },
+        "&:nth-last-child(1)": {
+            borderTopRightRadius: getThemeValue(props.theme, 'borderRadius.md'),
+            borderBottomRightRadius: getThemeValue(props.theme, 'borderRadius.md'),
+        }
+    }
+})
+
+const BlockRadio = (props: TRadioProps) => {
+
+    return (
+        <BlockRadioButton
+            onClick={()=>{
+                props.onChange?.({
+                    target: {
+                        value: props.value,
+                        checked: !props.checked
+                    }
+                } as React.ChangeEvent<HTMLInputElement>)
+            }}
+            active={props.checked}
+        >
+            {props.children}
+        </BlockRadioButton>
+    )
+}
+
 type TRadioGroupProps = {
     name?: string,
     options?: TOption[],
     value?: string,
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
-
+    block?: boolean
 }
 
 const RadioGroup = (props: TRadioGroupProps) => {
     const [value, setValue] = React.useState(props.value)
 
+    if (props.block) {
+        return (
+            <Flex gap={0}>
+                {props.options?.map((option) => {
+                    return (
+                        <BlockRadio
+                            name={props.name}
+                            value={option.value}
+                            key={option.label + option.value}
+                            checked={value === option.value}
+                            onChange={(e) => {
+                                setValue(e.target.value)
+                                props.onChange?.(e)
+                            }}
+                        >
+                            {option.label}
+                        </BlockRadio>
+                    )
+                })}
+            </Flex>
+        )
+        }
     return (
         <>
             {props.options?.map((option) => {
