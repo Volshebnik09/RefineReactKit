@@ -14,17 +14,26 @@ const StyledButton = styled.button<StyledButtonProps>((props) => {
     const borderRadius = getThemeValue(theme, 'borderRadius.md');
 
     const shadows = getThemeValue(theme, 'shadows.sm');
-    const backgroundColor = primary ?
-        getThemeValue(theme, 'colors.button.primary') :
-        getThemeValue(theme, 'colors.button.secondary');
     const border = primary ?
         'none' :
         `1px solid #a3a3a3`;
 
-    const color = primary ?
-        getThemeValue(theme, 'colors.button.textPrimary') :
-        getThemeValue(theme, 'colors.button.textSecondary');
     const fontFamily = getThemeValue(theme, 'fonts-family.primary');
+
+    const getColor = () => {
+        if (primary)
+            return getThemeValue(theme, 'colors.button.textPrimary');
+        return getThemeValue(theme, 'colors.button.textSecondary');
+    }
+    const color = getColor();
+    const getBackgroundColor = () => {
+        if (props.disabled)
+            return getThemeValue(theme, 'colors.button.disabled');
+        if (primary)
+            return getThemeValue(theme, 'colors.button.primary');
+        return getThemeValue(theme, 'colors.button.secondary');
+    }
+    const backgroundColor = getBackgroundColor();
 
     return {
         backgroundColor,

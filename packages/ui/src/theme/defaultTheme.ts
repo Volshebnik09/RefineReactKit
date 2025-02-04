@@ -7,6 +7,7 @@ const defaultTheme = {
             secondary: "#ffffff",
             textPrimary: "#fff",
             textSecondary: "#000",
+            disabled: "#e6e6e6",
         },
         text: {
             primary: "#000",
