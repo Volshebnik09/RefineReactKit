@@ -2,6 +2,7 @@
 import {Button, Panel, useTheme} from "@refine-react-kit/ui";
 import React, {useEffect} from "react";
 import TextComponents from "@/widgets/UIBlocks/TextComponents";
+import {setTheme, ThemesEnum} from "@/entity/theme";
 
 const LoadingIcon = () => {
     return (
@@ -41,6 +42,9 @@ export default function Home() {
             </Button>
             <Button
                 icon={<LoadingIcon/>}
+                onClick={()=>{
+                    setTheme(ThemesEnum.DarkTheme)
+                }}
             >
                 with icon
             </Button>

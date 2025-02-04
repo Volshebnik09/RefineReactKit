@@ -5,15 +5,15 @@ import React from "react";
 
 const darkTheme = {
     colors: {
-        // "primaryBackground": "#121212",
-        // "secondaryBackground": "#1E1E1E",
-        // "text": "#E0E0E0",
-        // "accent": "#BB86FC",
-        // "accentHover": "#9A67EA",
-        // "error": "#CF6679",
-        // "success": "#03DAC6",
-        // "warning": "#FFD600",
-        // "disabled": "#616161"
+        button: {
+            primary: "#000",
+            secondary: "#fff",
+            textPrimary: "#fff",
+            textSecondary: "#000"
+        },
+        text: {
+            primary: "#fff"
+        }
     }
 } as TTheme
 

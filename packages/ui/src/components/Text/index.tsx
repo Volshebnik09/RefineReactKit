@@ -12,17 +12,18 @@ const getDefaultTextStyles = (props: {
     }
 }
 
+const Span = styled.span((props)=>{
+        return {
+            ...getDefaultTextStyles(props),
+        }
+    })
+
+Span.displayName = "Text.Span"
+
+
 const Text = {
-    Span: styled.span((props)=>{
-        return {
-            ...getDefaultTextStyles(props),
-        }
-    }),
-    P: styled.p((props)=>{
-        return {
-            ...getDefaultTextStyles(props),
-        }
-    }),
+    Span: Span,
+    P: Span,
     H1: styled.h1((props)=>{
         return {
             ...getDefaultTextStyles(props),
