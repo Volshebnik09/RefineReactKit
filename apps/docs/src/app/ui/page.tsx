@@ -1,15 +1,19 @@
 "use client";
 import React from "react";
-import TextComponents from "@/widgets/UIBlocks/TextComponents";
-import ButtonComponents from "@/widgets/UIBlocks/ButtonComponents";
+import {Flex} from "@refine-react-kit/ui";
+import {ButtonComponents, FlexComponents, TextComponents} from "@/widgets/UIBlocks";
 
 
 
 export default function Home() {
     return (
-        <div>
+        <Flex align-stretch justify-between>
             <ButtonComponents/>
             <TextComponents/>
-        </div>
+            <FlexComponents.FlexVerticalCenter/>
+            <FlexComponents.FlexHorizontalCenter/>
+            <FlexComponents.FlexVerticalStart/>
+            <FlexComponents.FlexHorizontalStart/>
+        </Flex>
     )
 }

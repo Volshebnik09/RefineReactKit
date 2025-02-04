@@ -32,3 +32,11 @@ export type TPath<T> = T extends object
             : never;
     }[keyof T]
     : never;
+
+export type ValidateSingleFlag<T extends string> = {
+    [K in T]?: boolean;
+} & {
+    [K in T]: {
+        [P in Exclude<T, K>]?: never;
+    };
+}[T];
