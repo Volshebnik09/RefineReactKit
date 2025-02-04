@@ -98,9 +98,6 @@ const BlockRadioButton = styled(Button)<{
     active?: boolean
 }>(props=>{
     return {
-        ...(props.active && {
-            backgroundColor: getThemeValue(props.theme, 'colors.button.primary'),
-        }),
         borderRadius: 0,
         "& + button": {
             borderLeft: 'none'
@@ -128,7 +125,7 @@ const BlockRadio = (props: TRadioProps) => {
                     }
                 } as React.ChangeEvent<HTMLInputElement>)
             }}
-            active={props.checked}
+            primary={props.checked}
         >
             {props.children}
         </BlockRadioButton>

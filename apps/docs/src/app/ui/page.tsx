@@ -12,10 +12,7 @@ export default function Home() {
             <RadioComponents.BlockRadio/>
             <ButtonComponents/>
             <TextComponents/>
-            <FlexComponents.FlexVerticalCenter/>
-            <FlexComponents.FlexHorizontalCenter/>
-            <FlexComponents.FlexVerticalStart/>
-            <FlexComponents.FlexHorizontalStart/>
+            <FlexComponents.FlexPositions/>
         </Flex>
     )
 }

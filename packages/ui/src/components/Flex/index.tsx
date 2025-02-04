@@ -50,7 +50,8 @@ const Flex = styled.div<FlexProps>(props=> {
     const justifyContent = justifyOptions[justifyFlag]
     const flexDirection = directionOptions[directionFlag]
 
-    const gap = props.gap !== undefined ? props.gap : 0
+    const gap = props.gap !== undefined ? props.gap : "0.5rem"
+
     const flexWrap = props['no-wrap'] ? 'nowrap' : 'wrap'
     return {
         display: 'flex',
