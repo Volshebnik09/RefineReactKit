@@ -1,10 +1,14 @@
-import {Flex, Panel} from "@refine-react-kit/ui";
+import {Flex, Panel, Text} from "@refine-react-kit/ui";
 import {Baseitems} from "@/widgets/UIBlocks/FlexComponents/Baseitems";
 import { MainPanel } from "../MainPanel";
+import React from "react";
 
 const FlexVerticalCenter = () => {
     return (
         <MainPanel>
+            <Text.P>
+                align-center column justify-center
+            </Text.P>
             <Flex align-center column justify-center>
                 <Baseitems/>
             </Flex>
