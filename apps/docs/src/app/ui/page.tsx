@@ -1,6 +1,7 @@
 "use client";
 import {Button, Panel, useTheme} from "@refine-react-kit/ui";
 import React, {useEffect} from "react";
+import TextComponents from "@/widgets/UIBlocks/TextComponents";
 
 const LoadingIcon = () => {
     return (
@@ -43,6 +44,10 @@ export default function Home() {
             >
                 with icon
             </Button>
+            <Panel>
+                123
+            </Panel>
+            <TextComponents/>
         </div>
     )
 }

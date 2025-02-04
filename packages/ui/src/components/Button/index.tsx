@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import {getThemeValue} from "@/theme/Theme.js";
+import {Text} from "@/components/Text/index.js";
 
 type StyledButtonProps = {
     primary?: boolean,
@@ -55,13 +56,13 @@ const StyledButton = styled.button<StyledButtonProps>((props) => {
 const Button = (props: React.ComponentProps<typeof StyledButton>) => {
     return <StyledButton {...props} >
         {props.icon &&
-            <span>
+            <div>
                 {props.icon}
-            </span>
+            </div>
         }
-        <span>
+        <Text.Span>
             {props.children}
-        </span>
+        </Text.Span>
     </StyledButton>
 }
 

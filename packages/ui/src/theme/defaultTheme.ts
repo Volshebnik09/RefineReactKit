@@ -7,6 +7,9 @@ const defaultTheme = {
             secondary: "#ffffff",
             textPrimary: "#fff",
             textSecondary: "#000",
+        },
+        text: {
+            primary: "#000",
         }
     },
     "fonts-family": {
