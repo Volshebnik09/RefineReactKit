@@ -31,17 +31,17 @@ function Default() {
                         <Flex style={{marginTop: 20}}>
                             <Panel style={{width:'fit-content'}}>
                                 <Flex column>
-                                    <dragAndDropGroup1.Item data={{'id': 1}}>
+                                    <dragAndDropGroup1.Item data={{'id': index*2+1}}>
                                         <Panel style={{width: 'fit-content',background: "white"}}>
                                             <Text.Span>
-                                                #1 Drag me
+                                                #{index*2+1} Drag me
                                             </Text.Span>
                                         </Panel>
                                     </dragAndDropGroup1.Item>
-                                    <dragAndDropGroup1.Item data={{'id': 2}}>
+                                    <dragAndDropGroup1.Item data={{'id': index*2+2}}>
                                         <Panel style={{width: 'fit-content',background: "white"}}>
                                             <Text.Span>
-                                                #2 Drag me
+                                                #{index*2+2} Drag me
                                             </Text.Span>
                                         </Panel>
                                     </dragAndDropGroup1.Item>
@@ -50,20 +50,20 @@ function Default() {
                             <Panel style={{width: 'fit-content'}}>
                                 <Flex column>
                                     <dragAndDropGroup1.DropZone onDrop={(data) => {
-                                        setInformation({...information, lastId: data.id, lastZone: 1, group: index + 1})
+                                        setInformation({...information, lastId: data.id, lastZone: index*2+1, group: index + 1})
                                     }}>
                                         <Panel style={{width: 'fit-content', background: "white"}}>
                                             <Text.Span>
-                                                Drop here to Zone 1
+                                                Drop here to Zone {index*2+1}
                                             </Text.Span>
                                         </Panel>
                                     </dragAndDropGroup1.DropZone>
                                     <dragAndDropGroup1.DropZone onDrop={(data) => {
-                                        setInformation({...information, lastId: data.id, lastZone: 2, group: index + 1})
+                                        setInformation({...information, lastId: data.id, lastZone: index*2+2, group: index + 1})
                                     }}>
                                         <Panel style={{width: 'fit-content', background: "white"}}>
                                             <Text.Span>
-                                                Drop here to Zone 2
+                                                Drop here to Zone {index*2+2}
                                             </Text.Span>
                                         </Panel>
                                     </dragAndDropGroup1.DropZone>

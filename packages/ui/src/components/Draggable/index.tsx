@@ -6,6 +6,8 @@ type TDragItemProps<TData=undefined> = {
     children?: React.ReactNode,
     data: TData
     store:TStore<TData>
+    onDragStart?: (data: TData) => void
+    onDragEnd?: (data: TData) => void
 }
 
 type TWindowVeilProps <TData=undefined>= {
@@ -52,12 +54,14 @@ const DragItem = <TData=undefined>(props: TDragItemProps<TData>) => {
                     ...data,
                     draggedData: props.data
                 }))
+                props.onDragStart?.(props.data)
             }}
             onDragEnd={(e) => {
                 props.store.setState((data)=>({
                     ...data,
                     isDragging: false
                 }))
+                props.onDragEnd?.(props.data)
             }}
             draggable={true}
         >
@@ -71,6 +75,7 @@ type TDragDropZoneProps<TData = undefined> = {
     children?: React.ReactNode
     onDrop?: (data: TData) => void
     store:TStore<TData>
+    style?: React.CSSProperties
 }
 
 type TStyledDropZoneProps = {
@@ -94,7 +99,7 @@ const DragDropZone = <TData = undefined>(props: TDragDropZoneProps<TData>) => {
         const onDrop = (e: DragEvent) => {
             const dropTarget = e.target as HTMLElement
 
-            if (!dropZoneRef.current?.contains(dropTarget)) {
+            if (!isDragging || !dropZoneRef.current?.contains(dropTarget)) {
                 return
             }
 
@@ -118,7 +123,7 @@ const DragDropZone = <TData = undefined>(props: TDragDropZoneProps<TData>) => {
     }, [props.onDrop, data])
 
 
-    return <StyledDropZone highlighted={isDragging} ref={dropZoneRef}>
+    return <StyledDropZone highlighted={isDragging} ref={dropZoneRef} style={props.style}>
         {props.children}
     </StyledDropZone>
 }
