@@ -32,14 +32,14 @@ function Default() {
                             <Panel style={{width:'fit-content'}}>
                                 <Flex column>
                                     <dragAndDropGroup1.Item data={{'id': 1}}>
-                                        <Panel style={{width: 'fit-content'}}>
+                                        <Panel style={{width: 'fit-content',background: "white"}}>
                                             <Text.Span>
                                                 #1 Drag me
                                             </Text.Span>
                                         </Panel>
                                     </dragAndDropGroup1.Item>
                                     <dragAndDropGroup1.Item data={{'id': 2}}>
-                                        <Panel style={{width: 'fit-content'}}>
+                                        <Panel style={{width: 'fit-content',background: "white"}}>
                                             <Text.Span>
                                                 #2 Drag me
                                             </Text.Span>
