@@ -52,7 +52,7 @@ const StyledButton = styled.button<StyledButtonProps>((props) => {
         cursor: disabled ? 'not-allowed' : 'pointer',
         transition: '0.1s ease',
         boxShadow: shadows,
-        height: `32px`,
+        minHeight: `32px`,
         display: 'inline-flex',
         alignItems: 'center',
         justifyContent: 'center',

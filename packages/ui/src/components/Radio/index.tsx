@@ -145,7 +145,7 @@ const RadioGroup = (props: TRadioGroupProps) => {
 
     if (props.block) {
         return (
-            <Flex gap={0}>
+            <Flex gap={0} no-wrap align-stretch>
                 {props.options?.map((option) => {
                     return (
                         <BlockRadio
