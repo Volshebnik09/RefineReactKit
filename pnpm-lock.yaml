@@ -168,6 +168,9 @@ importers:
       '@emotion/styled':
         specifier: ^11.14.0
         version: 11.14.0(@emotion/react@11.14.0(@types/react@18.3.0)(react@19.0.0-rc-5c56b873-20241107))(@types/react@18.3.0)(react@19.0.0-rc-5c56b873-20241107)
+      '@tanstack/react-store':
+        specifier: ^0.6.1
+        version: 0.6.1(react-dom@19.0.0-rc-5c56b873-20241107(react@19.0.0-rc-5c56b873-20241107))(react@19.0.0-rc-5c56b873-20241107)
       next:
         specifier: 15.0.3
         version: 15.0.3(@babel/core@7.26.0)(react-dom@19.0.0-rc-5c56b873-20241107(react@19.0.0-rc-5c56b873-20241107))(react@19.0.0-rc-5c56b873-20241107)
@@ -201,7 +204,7 @@ importers:
         version: 18.3.1
       father:
         specifier: ^4.5.1
-        version: 4.5.1(@babel/core@7.26.0)(@types/node@20.17.6)(styled-components@5.3.11(@babel/core@7.26.0)(react-dom@19.0.0-rc-5c56b873-20241107(react@19.0.0-rc-5c56b873-20241107))(react-is@16.13.1)(react@19.0.0-rc-5c56b873-20241107))(type-fest@0.21.3)(webpack@5.97.1)
+        version: 4.5.1(@babel/core@7.26.0)(@types/node@20.17.6)(styled-components@5.3.11(@babel/core@7.26.0)(react-dom@19.0.0-rc-5c56b873-20241107(react@19.0.0-rc-5c56b873-20241107))(react-is@16.13.1)(react@19.0.0-rc-5c56b873-20241107))(type-fest@0.21.3)(webpack@5.97.1(esbuild@0.24.0))
       tsup:
         specifier: ^8.3.5
         version: 8.3.5(@microsoft/api-extractor@7.39.1(@types/node@20.17.6))(jiti@2.4.2)(postcss@8.4.49)(typescript@5.5.4)(yaml@2.6.1)
@@ -6579,7 +6582,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@umijs/bundler-webpack@4.4.4(type-fest@0.21.3)(typescript@5.3.3)(webpack@5.97.1)':
+  '@umijs/bundler-webpack@4.4.4(type-fest@0.21.3)(typescript@5.3.3)(webpack@5.97.1(esbuild@0.24.0))':
     dependencies:
       '@svgr/core': 6.5.1
       '@svgr/plugin-jsx': 6.5.1(@svgr/core@6.5.1)
@@ -6589,12 +6592,12 @@ snapshots:
       '@umijs/bundler-utils': 4.4.4
       '@umijs/case-sensitive-paths-webpack-plugin': 1.0.1
       '@umijs/mfsu': 4.4.4
-      '@umijs/react-refresh-webpack-plugin': 0.5.11(react-refresh@0.14.0)(type-fest@0.21.3)(webpack@5.97.1)
+      '@umijs/react-refresh-webpack-plugin': 0.5.11(react-refresh@0.14.0)(type-fest@0.21.3)(webpack@5.97.1(esbuild@0.24.0))
       '@umijs/utils': 4.4.4
       cors: 2.8.5
-      css-loader: 6.7.1(webpack@5.97.1)
+      css-loader: 6.7.1(webpack@5.97.1(esbuild@0.24.0))
       es5-imcompatible-versions: 0.1.90
-      fork-ts-checker-webpack-plugin: 8.0.0(typescript@5.3.3)(webpack@5.97.1)
+      fork-ts-checker-webpack-plugin: 8.0.0(typescript@5.3.3)(webpack@5.97.1(esbuild@0.24.0))
       jest-worker: 29.4.3
       lightningcss: 1.22.1
       node-libs-browser: 2.2.1
@@ -6632,7 +6635,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@umijs/react-refresh-webpack-plugin@0.5.11(react-refresh@0.14.0)(type-fest@0.21.3)(webpack@5.97.1)':
+  '@umijs/react-refresh-webpack-plugin@0.5.11(react-refresh@0.14.0)(type-fest@0.21.3)(webpack@5.97.1(esbuild@0.24.0))':
     dependencies:
       ansi-html-community: 0.0.8
       common-path-prefix: 3.0.0
@@ -6644,7 +6647,7 @@ snapshots:
       react-refresh: 0.14.0
       schema-utils: 3.3.0
       source-map: 0.7.4
-      webpack: 5.97.1
+      webpack: 5.97.1(esbuild@0.24.0)
     optionalDependencies:
       type-fest: 0.21.3
 
@@ -7359,7 +7362,7 @@ snapshots:
       postcss: 8.4.49
       postcss-selector-parser: 6.1.2
 
-  css-loader@6.7.1(webpack@5.97.1):
+  css-loader@6.7.1(webpack@5.97.1(esbuild@0.24.0)):
     dependencies:
       icss-utils: 5.1.0(postcss@8.4.49)
       postcss: 8.4.49
@@ -7369,7 +7372,7 @@ snapshots:
       postcss-modules-values: 4.0.0(postcss@8.4.49)
       postcss-value-parser: 4.2.0
       semver: 7.6.3
-      webpack: 5.97.1
+      webpack: 5.97.1(esbuild@0.24.0)
 
   css-prefers-color-scheme@6.0.3(postcss@8.4.49):
     dependencies:
@@ -8255,12 +8258,12 @@ snapshots:
     dependencies:
       reusify: 1.0.4
 
-  father@4.5.1(@babel/core@7.26.0)(@types/node@20.17.6)(styled-components@5.3.11(@babel/core@7.26.0)(react-dom@19.0.0-rc-5c56b873-20241107(react@19.0.0-rc-5c56b873-20241107))(react-is@16.13.1)(react@19.0.0-rc-5c56b873-20241107))(type-fest@0.21.3)(webpack@5.97.1):
+  father@4.5.1(@babel/core@7.26.0)(@types/node@20.17.6)(styled-components@5.3.11(@babel/core@7.26.0)(react-dom@19.0.0-rc-5c56b873-20241107(react@19.0.0-rc-5c56b873-20241107))(react-is@16.13.1)(react@19.0.0-rc-5c56b873-20241107))(type-fest@0.21.3)(webpack@5.97.1(esbuild@0.24.0)):
     dependencies:
       '@microsoft/api-extractor': 7.39.1(@types/node@20.17.6)
       '@umijs/babel-preset-umi': 4.4.4
       '@umijs/bundler-utils': 4.4.4
-      '@umijs/bundler-webpack': 4.4.4(type-fest@0.21.3)(typescript@5.3.3)(webpack@5.97.1)
+      '@umijs/bundler-webpack': 4.4.4(type-fest@0.21.3)(typescript@5.3.3)(webpack@5.97.1(esbuild@0.24.0))
       '@umijs/case-sensitive-paths-webpack-plugin': 1.0.1
       '@umijs/core': 4.4.4
       '@umijs/utils': 4.4.4
@@ -8356,7 +8359,7 @@ snapshots:
       cross-spawn: 7.0.6
       signal-exit: 4.1.0
 
-  fork-ts-checker-webpack-plugin@8.0.0(typescript@5.3.3)(webpack@5.97.1):
+  fork-ts-checker-webpack-plugin@8.0.0(typescript@5.3.3)(webpack@5.97.1(esbuild@0.24.0)):
     dependencies:
       '@babel/code-frame': 7.26.2
       chalk: 4.1.2
@@ -8371,7 +8374,7 @@ snapshots:
       semver: 7.6.3
       tapable: 2.2.1
       typescript: 5.3.3
-      webpack: 5.97.1
+      webpack: 5.97.1(esbuild@0.24.0)
 
   fraction.js@4.3.7: {}
 
@@ -10606,14 +10609,16 @@ snapshots:
 
   tapable@2.2.1: {}
 
-  terser-webpack-plugin@5.3.11(webpack@5.97.1):
+  terser-webpack-plugin@5.3.11(esbuild@0.24.0)(webpack@5.97.1(esbuild@0.24.0)):
     dependencies:
       '@jridgewell/trace-mapping': 0.3.25
       jest-worker: 27.5.1
       schema-utils: 4.3.0
       serialize-javascript: 6.0.2
       terser: 5.37.0
-      webpack: 5.97.1
+      webpack: 5.97.1(esbuild@0.24.0)
+    optionalDependencies:
+      esbuild: 0.24.0
 
   terser@5.37.0:
     dependencies:
@@ -10958,7 +10963,7 @@ snapshots:
 
   webpack-sources@3.2.3: {}
 
-  webpack@5.97.1:
+  webpack@5.97.1(esbuild@0.24.0):
     dependencies:
       '@types/eslint-scope': 3.7.7
       '@types/estree': 1.0.6
@@ -10980,7 +10985,7 @@ snapshots:
       neo-async: 2.6.2
       schema-utils: 3.3.0
       tapable: 2.2.1
-      terser-webpack-plugin: 5.3.11(webpack@5.97.1)
+      terser-webpack-plugin: 5.3.11(esbuild@0.24.0)(webpack@5.97.1(esbuild@0.24.0))
       watchpack: 2.4.2
       webpack-sources: 3.2.3
     transitivePeerDependencies:
