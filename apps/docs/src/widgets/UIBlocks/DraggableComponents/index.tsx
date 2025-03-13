@@ -1,4 +1,5 @@
-import React from 'react';
+"use client"
+import React, {useEffect, useState} from 'react';
 import {MainPanel} from "@/widgets/UIBlocks/MainPanel";
 import {createDragAndDropZoneGroup, Flex, Panel, Text} from "@refine-react-kit/ui";
 import {createPortal} from "react-dom";
@@ -18,10 +19,19 @@ function Default() {
         group: undefined as number | undefined
     })
 
+    const [portalNode, setPortalNode] = useState<HTMLElement | null>(null);
+
+    useEffect(() => {
+        if (typeof document !== 'undefined') {
+            setPortalNode(document.body);
+        }
+    }, []);
+
+
     return (
         <MainPanel>
-            {createPortal(<dragAndDropGroup1.Veil/>, document.body)}
-            {createPortal(<dragAndDropGroup2.Veil/>, document.body)}
+            {portalNode && createPortal(<dragAndDropGroup1.Veil/>, portalNode)}
+            {portalNode && createPortal(<dragAndDropGroup2.Veil/>, portalNode)}
             <Flex>
                 {[dragAndDropGroup1, dragAndDropGroup2].map((dragAndDropGroup1, index)=> {
                     return <Panel style={{width:'fit-content'}} key={index}>
