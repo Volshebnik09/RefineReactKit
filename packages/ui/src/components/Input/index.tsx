@@ -11,6 +11,7 @@ const InputTypes = {
     number: 'number',
     date: 'date',
     time: 'time',
+    file: 'file',
     datetime: 'datetime',
 }
 
@@ -52,6 +53,7 @@ type InputProps = {
     errors?: string | string[] | false
     name?: string
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
+    type?: keyof typeof InputTypes
 }
 
 const StyledLabel = styled(Text.Span)(props=>{
@@ -69,13 +71,19 @@ const StyledError = styled(Text.Span)((props)=>{
     }
 })
 
+const StyledInputHolder = styled.div((props)=>{
+    return {
+        marginTop: getThemeValue(props.theme, 'spacing.sm'),
+    }
+})
+
 const Input = (props:InputProps) => {
     const [value, setValue] = useState(props.value || '')
 
     const errors = props.errors
     const isError = !!errors && (errors?.length > 0)
 
-    return <div>
+    return <StyledInputHolder>
         <StyledLabel>
             {props.label}
         </StyledLabel>
@@ -87,13 +95,14 @@ const Input = (props:InputProps) => {
                 setValue(e.target.value)
                 props.onChange?.(e)
             }}
+            type={props.type}
         />
         {isError && (
             <StyledError>
                 {Array.isArray(errors) ? errors.join(', ') : errors}
             </StyledError>
         )}
-    </div>
+    </StyledInputHolder>
 }
 
 export {

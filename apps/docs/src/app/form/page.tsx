@@ -1,7 +1,7 @@
 "use client";
 import {createForm} from "@refine-react-kit/form"
 import {z} from "zod";
-import {Input} from "@refine-react-kit/ui";
+import {Button, Input} from "@refine-react-kit/ui";
 
 const validation = z.object({
     password: z.string().min(3),
@@ -70,80 +70,68 @@ const FormButton = () => {
 
     const message = isLoading ? 'Loading' : haveErrors ? 'Error' : 'Submit'
 
-    return <button disabled={!canSubmit}>
+    return <Button disabled={!canSubmit}>
         {message}
-    </button>
+    </Button>
 }
 
 export default function Home() {
 
     return (
-        <div>
-            <form.Form>
-                <form.Item
-                    name={'password'}
-                    render={(props) =>
-                        <div>
-                            <Input
-                                name={props.fieldMeta.name}
-                                value={props.value as string}
-                                onChange={props.onChange}
-                                errors={props.fieldMeta.touched && props.fieldMeta.errors}
-                            />
-                        </div>
-                    }
-                />
-                <br/>
-                <br/>
-                <form.Item
-                    name={'confirmPassword'}
-                    render={(props) =>
-                        <div>
-                            <input
-                                name={props.fieldMeta.name}
-                                value={props.value as string}
-                                onChange={props.onChange}
-                            />
-                            <div>
-                                {props.fieldMeta.touched ? props.fieldMeta.errors.join(', ') : ''}
-                            </div>
-                        </div>
-                    }
-                />
-                <form.Item
-                    name={'image'}
-                    render={(props) =>
-                        <div>
-                            <input
-                                name={props.fieldMeta.name}
-                                onChange={props.onChange}
-                                type={'file'}
-                            />
-                            <div>
-                                {props.fieldMeta.touched ? props.fieldMeta.errors.join(', ') : ''}
-                            </div>
-                        </div>
-                    }
-                />
-                <form.Item
-                    name={'otherTextField'}
-                    render={(props) =>
-                        <div>
-                            <input
-                                name={props.fieldMeta.name}
-                                onChange={props.onChange}
-                                type={'text'}
-                            />
-                            <div>
-                                {props.fieldMeta.touched ? props.fieldMeta.errors.join(', ') : ''}
-                            </div>
-                        </div>
-                    }
-                />
-                <FormButton/>
-                <Fields/>
-                <br/>
-            </form.Form>
-        </div>
+        <form.Form>
+            <form.Item
+                name={'password'}
+                render={(props) =>
+                    <Input
+                        name={props.fieldMeta.name}
+                        value={props.value as string}
+                        onChange={props.onChange}
+                        errors={props.fieldMeta.touched && props.fieldMeta.errors}
+                        label={'password'}
+                    />
+                }
+            />
+            <form.Item
+                name={'confirmPassword'}
+                render={(props) =>
+                    <Input
+                        name={props.fieldMeta.name}
+                        value={props.value as string}
+                        onChange={props.onChange}
+                        errors={props.fieldMeta.touched && props.fieldMeta.errors}
+                        label={'confirmPassword'}
+                    />
+                }
+            />
+            <form.Item
+                name={'image'}
+                render={(props) =>
+                    <Input
+                        name={props.fieldMeta.name}
+                        value={props.value as string}
+                        onChange={props.onChange}
+                        errors={props.fieldMeta.touched && props.fieldMeta.errors}
+                        type={'file'}
+                        label={'image'}
+                    />
+                }
+            />
+            <form.Item
+                name={'otherTextField'}
+                render={(props) =>
+                    <Input
+                        name={props.fieldMeta.name}
+                        value={props.value as string}
+                        onChange={props.onChange}
+                        errors={props.fieldMeta.touched && props.fieldMeta.errors}
+                        type={'text'}
+                        label={'otherTextField'}
+                    />
+                }
+            />
+            <FormButton/>
+            <Fields/>
+            <br/>
+        </form.Form>
     )
 }
