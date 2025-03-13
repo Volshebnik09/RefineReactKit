@@ -8,12 +8,14 @@ import {
     RadioComponents,
     TextComponents
 } from "@/widgets/UIBlocks";
+import InputBlocks from "@/widgets/UIBlocks/InputBlocks";
 
 
 
 export default function Home() {
     return (
         <Flex align-stretch justify-between>
+            <InputBlocks/>
             <DraggableComponents.Default/>
             <RadioComponents.DefaultRadio/>
             <RadioComponents.BlockRadio/>

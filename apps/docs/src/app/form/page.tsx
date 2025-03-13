@@ -1,6 +1,7 @@
 "use client";
 import {createForm} from "@refine-react-kit/form"
 import {z} from "zod";
+import {Input} from "@refine-react-kit/ui";
 
 const validation = z.object({
     password: z.string().min(3),
@@ -83,14 +84,12 @@ export default function Home() {
                     name={'password'}
                     render={(props) =>
                         <div>
-                            <input
+                            <Input
                                 name={props.fieldMeta.name}
                                 value={props.value as string}
                                 onChange={props.onChange}
+                                errors={props.fieldMeta.touched && props.fieldMeta.errors}
                             />
-                            <div>
-                                {props.fieldMeta.touched ? props.fieldMeta.errors.join(', ') : ''}
-                            </div>
                         </div>
                     }
                 />
