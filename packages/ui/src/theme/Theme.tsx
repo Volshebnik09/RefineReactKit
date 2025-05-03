@@ -6,15 +6,15 @@ import {defaultTheme, TTheme } from './defaultTheme.js';
 type TGetThemeValueType<T, P extends TPath<T>> = P extends `${infer K}.${infer Rest}`
     ? K extends keyof T
         ? TGetThemeValueType<T[K], Rest & TPath<T[K]>>
-        : never
+        : any
     : P extends keyof T
         ? T[P]
-        : never;
+        : any;
 
 const getThemeValue = <P extends NonNullable<TPath<TTheme>>>(
     theme: TTheme | undefined,
     path: P
-): TGetThemeValueType<TTheme, P> => {
+)=> {
     const getValueByPath = (obj: any, keys: string[]): any => {
         let current = obj;
         for (const key of keys) {

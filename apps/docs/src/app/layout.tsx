@@ -18,7 +18,6 @@ const MainBody = (props: React.PropsWithChildren) => {
 }
 
 export default function RootLayout(props: React.PropsWithChildren) {
-
     return (
         <html lang="en">
         <UIRegistry>

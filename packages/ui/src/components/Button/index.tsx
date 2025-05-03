@@ -32,7 +32,7 @@ const StyledButton = styled.button<StyledButtonProps>((props) => {
 
     const shadows = getThemeValue(theme, 'shadows.sm');
     const border = getBorder(props)
-    const fontFamily = getThemeValue(theme, 'fonts-family.primary');
+    const fontFamily = getThemeValue(theme, 'fontsFamily.primary');
 
     const getBackgroundColor = () => {
         if (props.disabled)

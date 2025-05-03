@@ -35,7 +35,7 @@ const DefaultRadio = () => {
     )
 }
 
-const BlockRadio = (props: any) => {
+const BlockRadio = () => {
     return (
         <MainPanel>
             <Flex column>

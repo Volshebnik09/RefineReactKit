@@ -11,9 +11,15 @@ const defaultTheme = {
         },
         text: {
             primary: "#000",
+        },
+        background: {
+            primary: "#fff"
+        },
+        border: {
+            primary: "#e0e0e0"
         }
     },
-    "fonts-family": {
+    fontsFamily: {
       primary: "sans-serif",
     },
     fontSize: {
@@ -35,6 +41,9 @@ const defaultTheme = {
         sm: '0.25rem',
         md: '0.35rem',
         lg: '1rem',
+    },
+    borderWidths: {
+        sm: "1px",
     },
     shadows: {
         sm: '0px 1px 3px rgba(0, 0, 0, 0.12)',

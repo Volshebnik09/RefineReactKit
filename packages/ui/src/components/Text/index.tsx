@@ -7,7 +7,7 @@ const getDefaultTextStyles = (props: {
 }) => {
     return {
         color: getThemeValue(props.theme, 'colors.text.primary'),
-        fontFamily: getThemeValue(props.theme, 'fonts-family.primary'),
+        fontFamily: getThemeValue(props.theme, 'fontsFamily.primary'),
         fontSize: getThemeValue(props.theme, 'fontSize.sm'),
     }
 }
