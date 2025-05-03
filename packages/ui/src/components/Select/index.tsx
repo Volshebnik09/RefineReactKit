@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {
     getInputValueBoxStyles,
     StyledError,
@@ -49,37 +49,41 @@ type TSelectProps<TValue> = {
     label?: string
     name?: string
     options?: TOption<TValue>[]
+    onChange?: (option: TValue) => void
 }
 
 const StyledList = styled.div<{
     dropDownIsActive?: boolean
 }>((props) => {
-
     return {
         display: props.dropDownIsActive ? "block" : "none",
-        maxHeight: "400px",
+        maxHeight: "160px",
         overflow: "hidden",
         overflowY: "auto",
     }
 })
 
-const StyledListItem = styled.div((props) => {
+const StyledListItem = styled.div<{selected?: boolean}>((props) => {
     const borderWidth = getThemeValue(props.theme, 'borderWidths.sm')
     const borderColor = getThemeValue(props.theme, 'colors.border.primary')
     const borderRadius = getThemeValue(props.theme, 'borderRadius.md');
 
-    const backgroundColor = getThemeValue(props.theme, 'colors.background.primary')
+    let backgroundColor = getThemeValue(props.theme, 'colors.background.primary')
+
+    if (props.selected) backgroundColor = getThemeValue(props.theme, 'colors.background.selected')
 
     return {
         ...getInputValueBoxStyles(props.theme),
         backgroundColor,
         border: undefined,
         borderRadius: undefined,
-        borderBottomLeftRadius: borderRadius,
-        borderBottomRightRadius: borderRadius,
         "& + &, &:nth-of-type(1)": {
             borderTop: `${borderWidth} solid ${borderColor}`,
-        }
+        },
+        "&:nth-of-type(-1)": {
+            borderBottomLeftRadius: borderRadius,
+            borderBottomRightRadius: borderRadius,
+        },
     }
 })
 
@@ -113,7 +117,18 @@ export const Select = <TValue = any>(props: TSelectProps<TValue>) => {
 
     const handleListItemClick = (option: TOption<TValue>) => {
         setValue(option.value)
+        props.onChange?.(option.value)
     }
+
+    useEffect(() => {
+        if (props.options) {
+            const uniqueValues = new Set(props.options.map(option => option.value))
+            if (uniqueValues.size !== props.options.length) {
+                console.warn('Select options must have unique values')
+            }
+        }
+
+    }, [props.options]);
 
     return <StyledInputHolder>
         <StyledLabel>
@@ -134,7 +149,10 @@ export const Select = <TValue = any>(props: TSelectProps<TValue>) => {
                 </StyledArrowDropUpHolder>
                 <StyledList dropDownIsActive={dropDownIsActive}>
                     {props.options?.map((option, index) => (
-                        <StyledListItem onClick={()=>handleListItemClick(option)}>
+                        <StyledListItem
+                            onClick={()=>handleListItemClick(option)} key={index}
+                            selected={option.value === value}
+                        >
                             {option.label}
                         </StyledListItem>
                     ))}

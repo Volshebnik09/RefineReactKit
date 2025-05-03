@@ -13,7 +13,8 @@ const defaultTheme = {
             primary: "#000",
         },
         background: {
-            primary: "#fff"
+            primary: "#fff",
+            selected: "#e6e6e6",
         },
         border: {
             primary: "#e0e0e0"
