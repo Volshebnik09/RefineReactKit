@@ -2,13 +2,11 @@ import styled from "@emotion/styled";
 import {useState} from "react";
 import {
     getInputValueBoxStyles,
-    shakeAnimation,
     StyledError,
     StyledInputHolder,
     StyledLabel,
     TFieldError
 } from "../shared/index.js";
-import {getThemeValue} from "@/theme/index.js";
 
 const InputTypes = {
     text: 'text',
