@@ -55,11 +55,14 @@ type TSelectProps<TValue> = {
 const StyledList = styled.div<{
     dropDownIsActive?: boolean
 }>((props) => {
+    const borderRadius = getThemeValue(props.theme, 'borderRadius.md');
     return {
         display: props.dropDownIsActive ? "block" : "none",
         maxHeight: "160px",
         overflow: "hidden",
         overflowY: "auto",
+        borderBottomLeftRadius: borderRadius,
+        borderBottomRightRadius: borderRadius,
     }
 })
 
@@ -106,7 +109,7 @@ const BackgroundDiv = styled.div((props) => {
 
 export const Select = <TValue = any>(props: TSelectProps<TValue>) => {
     const [value, setValue] = useState<TValue | undefined>(props.value || undefined)
-    const [dropDownIsActive, setDropDownIsActive] = useState(true)
+    const [dropDownIsActive, setDropDownIsActive] = useState(false)
 
     const errors = props.errors
     const isError = !!errors && (errors?.length > 0)
@@ -137,6 +140,7 @@ export const Select = <TValue = any>(props: TSelectProps<TValue>) => {
         <BackgroundDiv>
             &nbsp;
             <StyledValueAndListHolder
+                isError={isError}
                 onClick={() => {
                     toggleDropDown()
                 }}
