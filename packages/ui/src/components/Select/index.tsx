@@ -80,6 +80,8 @@ const StyledListItem = styled.div<{selected?: boolean}>((props) => {
         backgroundColor,
         border: undefined,
         borderRadius: undefined,
+        position: "relative",
+        zIndex: 1,
         "& + &, &:nth-of-type(1)": {
             borderTop: `${borderWidth} solid ${borderColor}`,
         },
