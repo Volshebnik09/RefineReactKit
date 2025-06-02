@@ -1,32 +1,29 @@
 "use client";
 import "./globals.css";
 import React from "react";
-import {getThemeValue, UIRegistry, useTheme} from "@refine-react-kit/ui";
-import {WithCustomTheme} from "@/entity/theme";
-
+import { UIRegistry } from "@refine-react-kit/ui";
+import { WithCustomTheme } from "@/entity/theme";
 
 const MainBody = (props: React.PropsWithChildren) => {
-    const currentTheme = useTheme()
-
-    return (
-        <body style={{
-            background: getThemeValue(currentTheme, 'colors.button.secondary')
-        }}>
-        {props.children}
-        </body>
-    )
-}
+  return (
+    <body
+      style={{
+        background: "#aaa",
+      }}
+    >
+      {props.children}
+    </body>
+  );
+};
 
 export default function RootLayout(props: React.PropsWithChildren) {
-    return (
-        <html lang="en">
-        <UIRegistry>
-            <WithCustomTheme>
-                <MainBody>
-                    {props.children}
-                </MainBody>
-            </WithCustomTheme>
-        </UIRegistry>
-        </html>
-    );
+  return (
+    <html lang="en">
+      <UIRegistry>
+        <WithCustomTheme>
+          <MainBody>{props.children}</MainBody>
+        </WithCustomTheme>
+      </UIRegistry>
+    </html>
+  );
 }
