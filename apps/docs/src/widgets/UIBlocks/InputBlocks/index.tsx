@@ -5,26 +5,26 @@ function InputBlocks() {
     return (
         <MainPanel>
             <Input
-                label={'Default'}
+                label={'input'}
             />
             <Input
-                label={'With Error'}
+                label={'input with Error'}
                 errors={"Error"}
             />
             <Input
+                label="password"
                 type='password'
             />
             <Input
+            label="data"
                 type='date'
             />
             <Input
-                type='datetime'
-            />
-                <Input
-                type='file'
+            label="number"
+                type='number'
             />
             <Select
-                label={'With Label'}
+                label={'select'}
                 options={[
                     {
                         value: "value1",
@@ -45,7 +45,7 @@ function InputBlocks() {
                 ]}
             />
             <Select
-                label={'With Error'}
+                label={'select with error'}
                 errors={"Error"}
                 options={[
                     {
