@@ -1,14 +1,14 @@
 import styled from "@emotion/styled";
-import {getThemeValue} from "@/theme/Theme.js";
-import {Theme} from "@emotion/react";
+import { getThemeValue } from "@/theme/Theme.js";
+import { Theme } from "@emotion/react";
 
 const getDefaultTextStyles = (props: {
     theme: Theme
 }) => {
     return {
-        color: getThemeValue(props.theme, 'colors.text.primary'),
-        fontFamily: getThemeValue(props.theme, 'fontsFamily.primary'),
         fontSize: getThemeValue(props.theme, 'fontSize.sm'),
+        color: "inherit",
+        fontFamily: "inherit"
     }
 }
 

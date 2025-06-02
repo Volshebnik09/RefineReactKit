@@ -18,7 +18,10 @@ const MainBody = (props: React.PropsWithChildren) => {
 
 export default function RootLayout(props: React.PropsWithChildren) {
   return (
-    <html lang="en">
+    <html lang="en" style={{
+      scrollBehavior: "smooth",
+      fontFamily: "'Roboto', sans-serif",
+    }}>
       <UIRegistry>
         <WithCustomTheme>
           <MainBody>{props.children}</MainBody>

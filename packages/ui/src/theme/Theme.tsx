@@ -1,7 +1,7 @@
-import {ThemeProvider as EmotionThemeProvider, useTheme as EmotionUseTheme} from '@emotion/react'
-import {deepMerge, TPath, TRecursivePartial} from "@/utils.js";
-import React from "react";
-import {defaultTheme, TTheme } from './defaultTheme.js';
+import { ThemeProvider as EmotionThemeProvider, useTheme as EmotionUseTheme } from '@emotion/react';
+import { deepMerge, TPath } from "@/utils.js";
+import { defaultTheme, TTheme } from './defaultTheme.js';
+import { PropsWithChildren } from 'react';
 
 type TGetThemeValueType<T, P extends TPath<T>> = P extends `${infer K}.${infer Rest}`
     ? K extends keyof T
@@ -38,8 +38,13 @@ const getThemeValue = <P extends NonNullable<TPath<TTheme>>>(
     return valueFromDefaultTheme as TGetThemeValueType<TTheme, P>;
 };
 
+export const useThemeValue = <P extends NonNullable<TPath<TTheme>>>(path: P) => {
+    const theme = EmotionUseTheme();
 
-const ThemeProvider = (props:React.PropsWithChildren<{
+    return getThemeValue(theme, path);
+}
+
+const ThemeProvider = (props:PropsWithChildren<{
     theme?: TTheme
 }>) => {
     const mergedTheme = props.theme ? deepMerge(defaultTheme, props.theme) : defaultTheme;

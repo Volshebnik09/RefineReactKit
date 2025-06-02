@@ -1,10 +1,11 @@
 import { TTheme } from "./defaultTheme.js"
-import {getThemeValue, ThemeProvider, useTheme } from "./Theme.js"
+import { getThemeValue, ThemeProvider, useTheme, useThemeValue } from "./Theme.js"
 
 export {
     ThemeProvider,
     getThemeValue,
-    useTheme
+    useTheme,
+    useThemeValue
 }
 
 export type {

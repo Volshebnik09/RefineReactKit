@@ -21,9 +21,6 @@ const defaultTheme = {
       primary: "#e0e0e0",
     },
   },
-  fontsFamily: {
-    primary: "sans-serif",
-  },
   fontSize: {
     xs: "0.75rem",
     sm: "1rem",
