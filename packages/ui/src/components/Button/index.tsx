@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
-import {getThemeValue} from "@/theme/Theme.js";
-import {Text} from "@/components/Text/index.js";
-import {Theme} from "@emotion/react";
+import { getThemeValue } from "@/theme/Theme.js";
+import { Text } from "@/components/Text/index.js";
+import { Theme } from "@emotion/react";
 
 type StyledButtonProps = {
     primary?: boolean,
@@ -32,7 +32,6 @@ const StyledButton = styled.button<StyledButtonProps>((props) => {
 
     const shadows = getThemeValue(theme, 'shadows.sm');
     const border = getBorder(props)
-    const fontFamily = getThemeValue(theme, 'fontsFamily.primary');
 
     const getBackgroundColor = () => {
         if (props.disabled)
@@ -57,7 +56,7 @@ const StyledButton = styled.button<StyledButtonProps>((props) => {
         alignItems: 'center',
         justifyContent: 'center',
         gap: '8px',
-        fontFamily,
+        fontFamily: "inherit",
 
         '&:hover': {
             filter: disabled ? 'none' : 'brightness(0.94)',

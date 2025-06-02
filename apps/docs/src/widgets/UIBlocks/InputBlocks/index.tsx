@@ -1,6 +1,5 @@
-import React from 'react';
-import {MainPanel} from "@/widgets/UIBlocks/MainPanel";
-import {Input, Select} from "@refine-react-kit/ui";
+import { MainPanel } from "@/widgets/UIBlocks/MainPanel";
+import { Input, Select } from "@refine-react-kit/ui";
 
 function InputBlocks() {
     return (
@@ -11,6 +10,18 @@ function InputBlocks() {
             <Input
                 label={'With Error'}
                 errors={"Error"}
+            />
+            <Input
+                type='password'
+            />
+            <Input
+                type='date'
+            />
+            <Input
+                type='datetime'
+            />
+                <Input
+                type='file'
             />
             <Select
                 label={'With Label'}

@@ -63,6 +63,7 @@ export default function page() {
             </Link>
           </Flex>
         </Panel>
+        {/* Main Content */}
         <Panel style={{ flex: 1 }}>
         <Flex column gap={12}>
             <Text.H2 id="text">Текст</Text.H2>

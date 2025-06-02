@@ -1,15 +1,14 @@
 import styled from "@emotion/styled";
-import {getThemeValue} from "@/theme/index.js";
-import {Text} from "@/components/Text/index.js";
-import {Theme} from "@emotion/react";
-import {HTMLAttributes} from "react";
-import {shakeAnimation} from "@/components/shared/animations.js";
+import { getThemeValue } from "@/theme/index.js";
+import { Text } from "@/components/Text/index.js";
+import { Theme } from "@emotion/react";
+import { shakeAnimation } from "@/components/shared/animations.js";
 export * from "./animations.js"
 
 export const StyledInputHolder = styled.div((props)=>{
     return {
         marginTop: getThemeValue(props.theme, 'spacing.sm'),
-        fontFamily: getThemeValue(props.theme, 'fontsFamily.primary'),
+        fontFamily: "inherit"
     }
 })
 
