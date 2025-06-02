@@ -48,9 +48,9 @@ const defaultTheme = {
     sm: "1px",
   },
   shadows: {
-    sm: "0px 1px 3px rgba(0, 0, 0, 0.12)",
-    md: "0px 3px 6px rgba(0, 0, 0, 0.16)",
-    lg: "0px 6px 10px rgba(0, 0, 0, 0.24)",
+    sm: "0px 2px 6px rgba(0, 0, 0, 0.12)",
+    md: "0px 4px 6px rgba(0, 0, 0, 0.16)",
+    lg: "0px 8px 12px rgba(0, 0, 0, 0.24)",
   },
 };
 

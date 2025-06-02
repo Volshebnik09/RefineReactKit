@@ -1,174 +1,196 @@
 /** @jsxImportSource @emotion/react */
-import {useEffect, useState} from "react";
+import { useEffect, useRef, useState } from "react";
 import {
     getInputValueBoxStyles,
     StyledError,
     StyledInputHolder,
     StyledLabel,
-    TFieldError
+    TFieldError,
 } from "@/components/shared/index.js";
 import styled from "@emotion/styled";
-import {ArrowDropUp} from "@/components/svg/google/index.js";
-import {getThemeValue} from "@/theme/index.js";
+import { ArrowDropUp } from "@/components/svg/google/index.js";
+import { getThemeValue } from "@/theme/index.js";
 
 const StyledValueAndListHolder = styled.div<{ isError?: boolean }>((props) => {
-    return {
-        position: "absolute",
-        userSelect: "none",
-        cursor: "pointer",
-        ...getInputValueBoxStyles(props.theme, props.isError),
-        padding: 0,
-        top: 0,
-        left: 0
-    }
-})
+  return {
+    position: "absolute",
+    userSelect: "none",
+    cursor: "pointer",
+    ...getInputValueBoxStyles(props.theme, props.isError),
+    padding: 0,
+    top: 0,
+    left: 0,
+  };
+});
 
 type TStyledArrowDropUpHolderProps = {
-    dropDownIsActive?: boolean
-}
+  dropDownIsActive?: boolean;
+};
 
-const StyledArrowDropUpHolder = styled.div((props: TStyledArrowDropUpHolderProps) => {
+const StyledArrowDropUpHolder = styled.div(
+  (props: TStyledArrowDropUpHolderProps) => {
     return {
-        transform: props.dropDownIsActive ? "rotate(0deg)" : "rotate(-180deg)",
-        position: "absolute",
-        right: 0,
-        top: 0,
-        width: "30px",
-        height: "30px",
-    } as const
-})
+      transform: props.dropDownIsActive ? "rotate(0deg)" : "rotate(-180deg)",
+      position: "absolute",
+      right: 0,
+      top: 0,
+      width: "30px",
+      height: "30px",
+    } as const;
+  }
+);
 
 type TOption<TValue> = {
-    value: TValue,
-    label: string,
-}
+  value: TValue;
+  label: string;
+};
 
 type TSelectProps<TValue> = {
-    value?: TValue,
-    errors?: TFieldError
-    label?: string
-    name?: string
-    options?: TOption<TValue>[]
-    onChange?: (option: TValue) => void
-}
+  value?: TValue;
+  errors?: TFieldError;
+  label?: string;
+  name?: string;
+  options?: TOption<TValue>[];
+  onChange?: (option: TValue) => void;
+  placeholder?: string;
+};
 
 const StyledList = styled.div<{
-    dropDownIsActive?: boolean
+  dropDownIsActive?: boolean;
 }>((props) => {
-    const borderRadius = getThemeValue(props.theme, 'borderRadius.md');
-    return {
-        display: props.dropDownIsActive ? "block" : "none",
-        maxHeight: "160px",
-        overflow: "hidden",
-        overflowY: "auto",
-        borderBottomLeftRadius: borderRadius,
-        borderBottomRightRadius: borderRadius,
-    }
-})
+  const borderRadius = getThemeValue(props.theme, "borderRadius.md");
+  return {
+    display: props.dropDownIsActive ? "block" : "none",
+    maxHeight: "160px",
+    overflow: "hidden",
+    overflowY: "auto",
+    borderBottomLeftRadius: borderRadius,
+    borderBottomRightRadius: borderRadius,
+  };
+});
 
-const StyledListItem = styled.div<{selected?: boolean}>((props) => {
-    const borderWidth = getThemeValue(props.theme, 'borderWidths.sm')
-    const borderColor = getThemeValue(props.theme, 'colors.border.primary')
-    const borderRadius = getThemeValue(props.theme, 'borderRadius.md');
+const StyledListItem = styled.div<{ selected?: boolean }>((props) => {
+  const borderWidth = getThemeValue(props.theme, "borderWidths.sm");
+  const borderColor = getThemeValue(props.theme, "colors.border.primary");
+  const borderRadius = getThemeValue(props.theme, "borderRadius.md");
 
-    let backgroundColor = getThemeValue(props.theme, 'colors.background.primary')
+  let backgroundColor = getThemeValue(props.theme, "colors.background.primary");
 
-    if (props.selected) backgroundColor = getThemeValue(props.theme, 'colors.background.selected')
+  if (props.selected)
+    backgroundColor = getThemeValue(props.theme, "colors.background.selected");
 
-    return {
-        ...getInputValueBoxStyles(props.theme),
-        backgroundColor,
-        border: undefined,
-        borderRadius: undefined,
-        position: "relative",
-        zIndex: 1,
-        "& + &, &:nth-of-type(1)": {
-            borderTop: `${borderWidth} solid ${borderColor}`,
-        },
-        "&:nth-of-type(-1)": {
-            borderBottomLeftRadius: borderRadius,
-            borderBottomRightRadius: borderRadius,
-        },
-    }
-})
+  return {
+    ...getInputValueBoxStyles(props.theme),
+    backgroundColor,
+    border: undefined,
+    borderRadius: undefined,
+    position: "relative",
+    zIndex: 1,
+    "& + &, &:nth-of-type(1)": {
+      borderTop: `${borderWidth} solid ${borderColor}`,
+    },
+    "&:nth-of-type(-1)": {
+      borderBottomLeftRadius: borderRadius,
+      borderBottomRightRadius: borderRadius,
+    },
+  };
+});
 
 const StyledValueHolder = styled.div((props) => {
-    return {
-        ...getInputValueBoxStyles(props.theme),
-        border: 'None'
-    }
-})
+  return {
+    ...getInputValueBoxStyles(props.theme),
+    border: "None",
+  };
+});
 
 const BackgroundDiv = styled.div((props) => {
-    return {
-        position: "relative",
-        userSelect: "none",
-        cursor: "pointer",
-        ...getInputValueBoxStyles(props.theme),
-        border: undefined
-    }
-})
+  return {
+    position: "relative",
+    userSelect: "none",
+    cursor: "pointer",
+    ...getInputValueBoxStyles(props.theme),
+    border: undefined,
+  };
+});
 
 export const Select = <TValue = any>(props: TSelectProps<TValue>) => {
-    const [value, setValue] = useState<TValue | undefined>(props.value || undefined)
-    const [dropDownIsActive, setDropDownIsActive] = useState(false)
+  const [value, setValue] = useState<TValue | undefined>(
+    props.value || undefined
+  );
+  const [dropDownIsActive, setDropDownIsActive] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
 
-    const errors = props.errors
-    const isError = !!errors && (errors?.length > 0)
+  const errors = props.errors;
+  const isError = !!errors && errors?.length > 0;
 
-    const toggleDropDown = () => {
-        setDropDownIsActive(!dropDownIsActive)
+  const toggleDropDown = () => {
+    setDropDownIsActive(!dropDownIsActive);
+  };
+
+  const handleListItemClick = (option: TOption<TValue>) => {
+    setValue(option.value);
+    props.onChange?.(option.value);
+  };
+
+  useEffect(() => {
+    if (props.options) {
+      const uniqueValues = new Set(props.options.map((option) => option.value));
+      if (uniqueValues.size !== props.options.length) {
+        console.warn("Select options must have unique values");
+      }
     }
+  }, [props.options]);
 
-    const handleListItemClick = (option: TOption<TValue>) => {
-        setValue(option.value)
-        props.onChange?.(option.value)
-    }
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (ref.current && !ref.current.contains(event.target as Node)) {
+        setDropDownIsActive(false);
+      }
+    };
 
-    useEffect(() => {
-        if (props.options) {
-            const uniqueValues = new Set(props.options.map(option => option.value))
-            if (uniqueValues.size !== props.options.length) {
-                console.warn('Select options must have unique values')
-            }
-        }
+    document.addEventListener("mousedown", handleClickOutside);
 
-    }, [props.options]);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
 
-    return <StyledInputHolder>
-        <StyledLabel>
-            {props.label}
-        </StyledLabel>
-        <BackgroundDiv>
-            &nbsp;
-            <StyledValueAndListHolder
-                isError={isError}
-                onClick={() => {
-                    toggleDropDown()
-                }}
-            >
-                <StyledValueHolder>
-                    {value ? String(value) : 'Select an option'}
-                </StyledValueHolder>
-                <StyledArrowDropUpHolder dropDownIsActive={dropDownIsActive}>
-                    <ArrowDropUp/>
-                </StyledArrowDropUpHolder>
-                <StyledList dropDownIsActive={dropDownIsActive}>
-                    {props.options?.map((option, index) => (
-                        <StyledListItem
-                            onClick={()=>handleListItemClick(option)} key={index}
-                            selected={option.value === value}
-                        >
-                            {option.label}
-                        </StyledListItem>
-                    ))}
-                </StyledList>
-            </StyledValueAndListHolder>
-        </BackgroundDiv>
-        {isError && (
-            <StyledError>
-                {Array.isArray(errors) ? errors.join(', ') : errors}
-            </StyledError>
-        )}
+  }, [ref.current]);
+
+  return (
+    <StyledInputHolder ref={ref}>
+      <StyledLabel>{props.label}</StyledLabel>
+      <BackgroundDiv>
+        &nbsp;
+        <StyledValueAndListHolder
+          isError={isError}
+          onClick={() => {
+            toggleDropDown();
+          }}
+        >
+          <StyledValueHolder>
+            {value ? String(value) : props.placeholder || "Select an option"}
+          </StyledValueHolder>
+          <StyledArrowDropUpHolder dropDownIsActive={dropDownIsActive}>
+            <ArrowDropUp />
+          </StyledArrowDropUpHolder>
+          <StyledList dropDownIsActive={dropDownIsActive}>
+            {props.options?.map((option, index) => (
+              <StyledListItem
+                onClick={() => handleListItemClick(option)}
+                key={index}
+                selected={option.value === value}
+              >
+                {option.label}
+              </StyledListItem>
+            ))}
+          </StyledList>
+        </StyledValueAndListHolder>
+      </BackgroundDiv>
+      {isError && (
+        <StyledError>
+          {Array.isArray(errors) ? errors.join(", ") : errors}
+        </StyledError>
+      )}
     </StyledInputHolder>
-}
+  );
+};
